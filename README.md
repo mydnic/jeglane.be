@@ -27,8 +27,8 @@ Le projet est développé en PHP avec le framework Laravel.
 
 1. Clonez le dépôt :
 ```bash
-git clone https://github.com/votre-utilisateur/votre-repo.git
-cd votre-repo
+git clone https://github.com/mydnic/jeglane.be.git jeglane
+cd jeglane
 ```
 
 2. Installez les dépendances PHP :  

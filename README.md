@@ -1,4 +1,4 @@
-# JeGlane.be - Projet de Partage des emplacement de Glanage en Belgique
+# JeGlane.be - Projet de Partage des emplacements de Glanage en Belgique
 
 Ce projet est une application web permettant aux utilisateurs de signaler les endroits en Belgique où il est possible de glaner des légumes et des pommes de terre.
 

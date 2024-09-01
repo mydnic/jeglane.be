@@ -62,4 +62,9 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function gleaningLocations()
+    {
+        return $this->hasMany(GleaningLocation::class);
+    }
 }

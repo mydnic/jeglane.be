@@ -18,6 +18,6 @@ class DatabaseSeeder extends Seeder
             'email' => 'mydnic@gmail.com',
         ]);
 
-        GleaningLocation::factory()->count(10)->create();
+        GleaningLocation::factory()->count(50)->create();
     }
 }

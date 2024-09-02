@@ -15,8 +15,9 @@ class GleaningLocationFactory extends Factory
         return [
             'user_id' => User::factory(),
             'description' => $this->faker->sentence,
-            'latitude' => $this->faker->latitude,
-            'longitude' => $this->faker->longitude,
+            // Coordinates in belgium
+            'latitude' => $this->faker->latitude(50.5, 51.5),
+            'longitude' => $this->faker->longitude(3.5, 4.5),
             'created_at' => $this->faker->dateTimeBetween('-1 year', 'now'),
         ];
     }

@@ -16,6 +16,11 @@ class GleaningLocation extends Model
         'longitude',
     ];
 
+    public function scopeActive()
+    {
+        return $this->whereDate('created_at', '>=', now()->subMonths(2));
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);

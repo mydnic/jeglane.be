@@ -353,6 +353,69 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@primeuix/styled@npm:^0.0.5":
+  version: 0.0.5
+  resolution: "@primeuix/styled@npm:0.0.5"
+  dependencies:
+    "@primeuix/utils": "npm:^0.0.5"
+  checksum: 10c0/bbf267d121deb053ea211ad5102ff6b4b6319f91909f667504fe0ad6522e5e3c3b6afacde413a5e341adffa36b283857b37d1cfe59777c96cb5e2676f419dd7e
+  languageName: node
+  linkType: hard
+
+"@primeuix/utils@npm:^0.0.5":
+  version: 0.0.5
+  resolution: "@primeuix/utils@npm:0.0.5"
+  checksum: 10c0/3310be6c730fe4049b8367dea41e23a678f64c4ea4df14bbce158e2e5914d19125ed21804da1697495417bcb072c76491ae3801fd9f295e54b4fb0d255e41814
+  languageName: node
+  linkType: hard
+
+"@primevue/auto-import-resolver@npm:^4.0.5":
+  version: 4.0.5
+  resolution: "@primevue/auto-import-resolver@npm:4.0.5"
+  dependencies:
+    "@primevue/metadata": "npm:4.0.5"
+  checksum: 10c0/e9d0e88ef1b97d634bfcf0b0b80b21c8ca4c43dc47c99f0a099c923e1a21bf40303972e940178db33ddf5f44743ced99e5e7a3854914dcba3380fbf1441479c7
+  languageName: node
+  linkType: hard
+
+"@primevue/core@npm:4.0.5":
+  version: 4.0.5
+  resolution: "@primevue/core@npm:4.0.5"
+  dependencies:
+    "@primeuix/styled": "npm:^0.0.5"
+    "@primeuix/utils": "npm:^0.0.5"
+  peerDependencies:
+    vue: ^3.0.0
+  checksum: 10c0/9bb3fa3a18a5428e56d32e3f6600040ca5f552a594323803064d91378d22927ad96f4bb713a67d1f5f31195f696635df9e89264c2c034554ce85936d30027b5a
+  languageName: node
+  linkType: hard
+
+"@primevue/icons@npm:4.0.5":
+  version: 4.0.5
+  resolution: "@primevue/icons@npm:4.0.5"
+  dependencies:
+    "@primeuix/utils": "npm:^0.0.5"
+    "@primevue/core": "npm:4.0.5"
+  checksum: 10c0/076fd0a224ff67310449b8f830e909a05f9c099ad87915b28f23700975441d74aee2e5151093c49f3948e688b5226ff3450fe6a7d08c955a20bc03ab13187c44
+  languageName: node
+  linkType: hard
+
+"@primevue/metadata@npm:4.0.5":
+  version: 4.0.5
+  resolution: "@primevue/metadata@npm:4.0.5"
+  checksum: 10c0/7705f19d75d48ba679f6ed78f8133a68dfb72fabc45303a3b15ea4491ba69bd02c63c4369bf7cce2dd8a714f0483ffad358e1e859a28621395f5c0b6b07b1fca
+  languageName: node
+  linkType: hard
+
+"@primevue/themes@npm:^4.0.5":
+  version: 4.0.5
+  resolution: "@primevue/themes@npm:4.0.5"
+  dependencies:
+    "@primeuix/styled": "npm:^0.0.5"
+  checksum: 10c0/0e7d822719ff287a3d117e6e1c601bdf70b3eb0bebada299f468ca4eb62ab85fb9e90d377eabe4ef5ae679e2634352fa774850a925e772c914a12bdbff97f46c
+  languageName: node
+  linkType: hard
+
 "@rollup/pluginutils@npm:^5.1.0":
   version: 5.1.0
   resolution: "@rollup/pluginutils@npm:5.1.0"
@@ -2095,6 +2158,25 @@ __metadata:
   languageName: node
   linkType: hard
 
+"primeicons@npm:^7.0.0":
+  version: 7.0.0
+  resolution: "primeicons@npm:7.0.0"
+  checksum: 10c0/a7f6344d6db49e785d2040b35f8cae761d15bb8f8ee70ade8981d45438245414e913fe7235921122aade2b0a11a032c98b44dc527be2da11aa791ff145099c06
+  languageName: node
+  linkType: hard
+
+"primevue@npm:^4.0.5":
+  version: 4.0.5
+  resolution: "primevue@npm:4.0.5"
+  dependencies:
+    "@primeuix/styled": "npm:^0.0.5"
+    "@primeuix/utils": "npm:^0.0.5"
+    "@primevue/core": "npm:4.0.5"
+    "@primevue/icons": "npm:4.0.5"
+  checksum: 10c0/8d7c32346dae1525e408a3ad804c3a57c43b0696c2b79f57e4e2f01bbb8faecad50e8fd9955c51efcaf36ca2a7591c993db88d38e3921dc7767c16b640f36971
+  languageName: node
+  linkType: hard
+
 "proc-log@npm:^4.1.0, proc-log@npm:^4.2.0":
   version: 4.2.0
   resolution: "proc-log@npm:4.2.0"
@@ -2261,6 +2343,8 @@ __metadata:
   resolution: "root-workspace-0b6124@workspace:."
   dependencies:
     "@inertiajs/vue3": "npm:^1.0.14"
+    "@primevue/auto-import-resolver": "npm:^4.0.5"
+    "@primevue/themes": "npm:^4.0.5"
     "@tailwindcss/forms": "npm:^0.5.7"
     "@tailwindcss/typography": "npm:^0.5.10"
     "@vitejs/plugin-vue": "npm:^5.0.0"
@@ -2269,6 +2353,8 @@ __metadata:
     axios: "npm:^1.6.4"
     laravel-vite-plugin: "npm:^1.0"
     postcss: "npm:^8.4.32"
+    primeicons: "npm:^7.0.0"
+    primevue: "npm:^4.0.5"
     tailwindcss: "npm:^3.4.0"
     unplugin-vue-components: "npm:^0.27.4"
     vite: "npm:^5.0"

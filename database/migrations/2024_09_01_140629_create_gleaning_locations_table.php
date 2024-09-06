@@ -12,9 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('gleaning_locations', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->text('description')->nullable();
+            $table->json('files')->nullable();
             $table->decimal('latitude', 10, 7);
             $table->decimal('longitude', 10, 7);
             $table->timestamps();

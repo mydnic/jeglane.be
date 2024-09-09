@@ -32,4 +32,9 @@ class GleaningLocation extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function gleanable()
+    {
+        return $this->belongsTo(Gleanable::class);
+    }
 }

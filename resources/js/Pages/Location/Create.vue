@@ -5,7 +5,7 @@
         </title>
         <meta
             name="description"
-            content="Your page description"
+            content="Soumettez un lieu de glanage pour que d'autres glaneurs puissent en profiter."
         >
     </Head>
 

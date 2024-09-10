@@ -15,6 +15,9 @@ class GleaningLocation extends Model
         'files',
         'user_id',
         'description',
+        'gleanable_id',
+        'city',
+        'postal_code',
         'latitude',
         'longitude',
     ];

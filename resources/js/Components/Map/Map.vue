@@ -7,6 +7,10 @@
 </template>
 
 <script>
+let map = null
+let infoWindow = null
+let geoCoder = null
+
 export default {
     props: {
         markers: {
@@ -19,12 +23,22 @@ export default {
         }
     },
 
-    emits: ['current-position'],
+    emits: ['current-position', 'center-changed', 'zoom-changed'],
 
     data () {
         return {
             map: null,
-            selectedMarker: null
+            selectedMarker: null,
+            markersArray: []
+        }
+    },
+
+    watch: {
+        markers: {
+            handler (newValue) {
+                this.addMarkers(newValue)
+            },
+            deep: true
         }
     },
 
@@ -45,11 +59,9 @@ export default {
             // @ts-ignore
             // eslint-disable-next-line no-undef
             const { Map } = await google.maps.importLibrary('maps')
-            // eslint-disable-next-line no-undef
-            const { AdvancedMarkerElement } = await google.maps.importLibrary('marker')
 
             // The map, centered at Uluru
-            const map = new Map(document.getElementById('map'), {
+            map = new Map(document.getElementById('map'), {
                 zoom: 9,
                 center: position,
                 mapId: 'DEMO_MAP_ID',
@@ -59,14 +71,20 @@ export default {
                 streetViewControl: false
             })
 
+            infoWindow = new google.maps.InfoWindow({
+                content: 'sdfsf',
+                ariaLabel: 'Uluru'
+            })
+
+            geoCoder = new google.maps.Geocoder()
+
+            this.$emit('center-changed', {
+                latitude: position.lat,
+                longitude: position.lng
+            })
+
             if (this.markers) {
-                this.markers.map((marker) => {
-                    new AdvancedMarkerElement({
-                        position: { lat: parseFloat(marker.latitude), lng: parseFloat(marker.longitude) },
-                        map: map,
-                        title: marker.html
-                    })
-                })
+                this.addMarkers()
             }
 
             this.addYourLocationButton(map)
@@ -74,6 +92,22 @@ export default {
             if (this.canSetMarker) {
                 this.registerMapClick(map)
             }
+
+            map.addListener('center_changed', () => {
+                const center = map.getCenter()
+                this.$emit('center-changed', {
+                    latitude: center.lat(),
+                    longitude: center.lng()
+                })
+            })
+            map.addListener('zoom_changed', () => {
+                this.$emit('zoom-changed', map.getZoom())
+            })
+        },
+
+        centerOn (latitude, longitude) {
+            map.panTo({ lat: parseFloat(latitude), lng: parseFloat(longitude) })
+            map.setZoom(15)
         },
 
         addYourLocationButton (map) {
@@ -152,23 +186,73 @@ export default {
             map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(controlDiv)
         },
 
-        registerMapClick (map) {
+        async registerMapClick (map) {
             const that = this
             // eslint-disable-next-line no-undef
-            google.maps.event.addListener(map, 'click', function (event) {
+            await google.maps.event.addListener(map, 'click', async function (event) {
                 if (that.selectedMarker) {
                     that.selectedMarker.position = event.latLng
                 } else {
-                    // eslint-disable-next-line no-undef
-                    that.selectedMarker = new google.maps.marker.AdvancedMarkerElement({
+                    const { AdvancedMarkerElement } = await google.maps.importLibrary('marker')
+                    that.selectedMarker = new AdvancedMarkerElement({
                         map: map,
                         position: event.latLng
                     })
                 }
-                that.$emit('current-position', {
-                    latitude: event.latLng.lat(),
-                    longitude: event.latLng.lng()
+
+                geoCoder.geocode({
+                    latLng: event.latLng
+                }, function (results, status) {
+                    if (status === google.maps.GeocoderStatus.OK) {
+                        if (results) {
+                            const city = results[0].address_components.find(component => component.types.includes('locality')).long_name
+                            const postalCode = results[0].address_components.find(component => component.types.includes('postal_code')).long_name
+
+                            that.$emit('current-position', {
+                                latitude: event.latLng.lat(),
+                                longitude: event.latLng.lng(),
+                                city,
+                                postalCode
+                            })
+                        }
+                    }
                 })
+            })
+        },
+
+        clearOverlays () {
+            for (var i = 0; i < this.markersArray.length; i++) {
+                this.markersArray[i].setMap(null)
+            }
+            this.markersArray.length = 0
+        },
+
+        async addMarkers  () {
+            // this.clearOverlays()
+            // eslint-disable-next-line no-undef
+            const { AdvancedMarkerElement } = await google.maps.importLibrary('marker')
+            this.markers.map((marker) => {
+                const m = new AdvancedMarkerElement({
+                    position: { lat: parseFloat(marker.latitude), lng: parseFloat(marker.longitude) },
+                    map: map,
+                    title: marker.html,
+                    gmpClickable: true
+                })
+                m.addListener('click', () => {
+                    infoWindow.setContent(
+                        '<div><strong>' + marker.data.gleanable.name + '</strong></div>'
+                        + '<div>' + marker.data.postal_code + ' ' + marker.data.city + '</div>'
+                        + '<div><a style="color:blue" href="/locations/' + marker.data.id + '">Voir le détail</a></div>'
+                    )
+                    infoWindow.open({
+                        anchor: m,
+                        map
+                    })
+
+                    console.log(infoWindow)
+                })
+
+                this.markersArray.push(m)
             })
         }
     }

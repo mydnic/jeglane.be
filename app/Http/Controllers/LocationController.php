@@ -11,6 +11,23 @@ class LocationController extends Controller
     public function index()
     {
         $locations = GleaningLocation::query()
+            ->with('gleanable')
+            ->when(request()->has('latitude') && request()->has('longitude'), function ($query) {
+                $query
+                    ->selectRaw('*, ST_Distance_Sphere(point(longitude, latitude), point(?, ?)) as distance', [
+                        request('longitude'),
+                        request('latitude'),
+                    ])
+                    ->whereRaw('ST_Distance_Sphere(point(longitude, latitude),point(?, ?)) < ?', [
+                        request('longitude'),
+                        request('latitude'),
+                        request('distance') ?? 70000, // 70 milles metres
+                    ]);
+            })
+            ->when(request()->has('postal_code'), function ($query) {
+                $query->where('postal_code', request('postal_code'));
+            })
+            ->orderBy('postal_code')
             ->get();
 
         return inertia('Location/Index', [
@@ -20,6 +37,7 @@ class LocationController extends Controller
 
     public function show(GleaningLocation $gleaningLocation)
     {
+        $gleaningLocation->load('gleanable');
         return inertia('Location/Show', compact('gleaningLocation'));
     }
 
@@ -34,14 +52,15 @@ class LocationController extends Controller
         $request->validate([
             'latitude' => 'required',
             'longitude' => 'required',
+            'city' => 'required|string',
+            'postal_code' => 'required',
             'description' => 'nullable|string',
             'gleanable_id' => 'required|exists:gleanables,id',
             'files' => 'nullable|array',
         ]);
 
-
         $location = auth()->user()->gleaningLocations()
-            ->create($request->only('latitude', 'longitude', 'description', 'gleanable_id', 'files'));
+            ->create($request->only('latitude', 'longitude', 'city', 'postal_code', 'description', 'gleanable_id', 'files'));
 
         return redirect()->route('locations.show', $location);
 

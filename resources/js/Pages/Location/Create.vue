@@ -69,6 +69,26 @@
                                             placeholder="Longitude"
                                         />
                                     </div>
+                                    <div class="flex flex-col gap-1">
+                                        <label for="username">Ville</label>
+                                        <InputText
+                                            v-model="formData.city"
+                                            type="text"
+                                            size="small"
+                                            required
+                                            placeholder="Ville"
+                                        />
+                                    </div>
+                                    <div class="flex flex-col gap-1">
+                                        <label for="username">Code Postal</label>
+                                        <InputText
+                                            v-model="formData.postal_code"
+                                            type="text"
+                                            size="small"
+                                            required
+                                            placeholder="Code Postal"
+                                        />
+                                    </div>
                                 </div>
                             </template>
 
@@ -221,6 +241,8 @@ export default {
             formData: {
                 latitude: null,
                 longitude: null,
+                city: null,
+                postal_code: null,
                 description: null,
                 fileUrls: []
             },
@@ -232,6 +254,8 @@ export default {
         onPositionChange (position) {
             this.formData.latitude = position.latitude
             this.formData.longitude = position.longitude
+            this.formData.city = position.city
+            this.formData.postal_code = position.postalCode
         },
 
         onUpload (event) {
@@ -246,7 +270,9 @@ export default {
                 gleanable_id: this.formData.gleanable_id.id,
                 description: this.formData.description,
                 latitude: this.formData.latitude,
-                longitude: this.formData.longitude
+                longitude: this.formData.longitude,
+                city: this.formData.city,
+                postal_code: this.formData.postal_code
             })
         }
     }

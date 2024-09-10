@@ -2,14 +2,16 @@
     <AppLayout>
         <Head>
             <title>
-                Glanage de {{ gleaningLocation.name }} - JeGlane.be
+                Glanage de {{ gleaningLocation.gleanable.name }} - JeGlane.be
             </title>
             <meta
                 name="description"
-                content="Soumettez un lieu de glanage pour que d'autres glaneurs puissent en profiter."
+                :content="`Glanage de ${gleaningLocation.gleanable.name} à ${gleaningLocation.city} (${gleaningLocation.postal_code})`"
             >
         </Head>
-        <h1>{{ gleaningLocation }}</h1>
+        <h1>
+            Glanage de {{ gleaningLocation.gleanable.name }} à {{ gleaningLocation.city }} ({{ gleaningLocation.postal_code }})
+        </h1>
 
         <Galleria
             :value="gleaningLocation.files"

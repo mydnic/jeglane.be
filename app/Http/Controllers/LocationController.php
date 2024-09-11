@@ -37,7 +37,7 @@ class LocationController extends Controller
 
     public function show(GleaningLocation $gleaningLocation)
     {
-        $gleaningLocation->load('gleanable');
+        $gleaningLocation->load('gleanable', 'user');
         return inertia('Location/Show', compact('gleaningLocation'));
     }
 

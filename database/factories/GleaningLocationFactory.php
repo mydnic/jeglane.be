@@ -23,7 +23,7 @@ class GleaningLocationFactory extends Factory
             'postal_code' => 4280,
             'city' => $this->faker->city,
             'created_at' => $this->faker->dateTimeBetween('-1 year', 'now'),
-            'files' => ['https://placehold.co/600x400'],
+            'files' => ['https://placehold.co/600x400', 'https://placehold.co/500x500'],
         ];
     }
 }

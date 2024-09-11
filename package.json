@@ -17,6 +17,7 @@
         "@vue/server-renderer": "^3.3.13",
         "autoprefixer": "^10.4.16",
         "axios": "^1.6.4",
+        "dayjs": "^1.11.13",
         "eslint": "^9.9.1",
         "laravel-vite-plugin": "^1.0",
         "postcss": "^8.4.32",

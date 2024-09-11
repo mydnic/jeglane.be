@@ -133,26 +133,19 @@
                                 Legal
                             </h3>
                             <ul
-                                role="list"
                                 class="mt-6 space-y-4"
                             >
                                 <li>
                                     <a
-                                        href="#"
+                                        href="/privacy-policy"
                                         class="text-sm leading-6 text-gray-600 hover:text-gray-900"
-                                    >Claim</a>
+                                    >Vie Privée</a>
                                 </li>
                                 <li>
                                     <a
-                                        href="#"
+                                        href="/terms-of-service"
                                         class="text-sm leading-6 text-gray-600 hover:text-gray-900"
-                                    >Privacy</a>
-                                </li>
-                                <li>
-                                    <a
-                                        href="#"
-                                        class="text-sm leading-6 text-gray-600 hover:text-gray-900"
-                                    >Terms</a>
+                                    >Termes et conditions</a>
                                 </li>
                             </ul>
                         </div>
@@ -187,7 +180,7 @@
                     </a>
                 </div>
                 <p class="mt-8 text-xs leading-5 text-gray-500 md:order-1 md:mt-0">
-                    &copy; {{ new Date() }} MY DYNAMIC PRODUCTION SRL. Tous droits réservés.
+                    &copy; {{ $dayjs(new Date()).format('YYYY') }} MY DYNAMIC PRODUCTION SRL. Tous droits réservés.
                 </p>
             </div>
         </div>

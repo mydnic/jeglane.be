@@ -5,6 +5,8 @@ use App\Http\Controllers\LocationController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use Laravel\Jetstream\Http\Controllers\Inertia\PrivacyPolicyController;
+use Laravel\Jetstream\Http\Controllers\Inertia\TermsOfServiceController;
 
 Route::get('/', [HomeController::class, 'home'])->name('home');
 

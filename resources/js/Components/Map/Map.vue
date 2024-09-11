@@ -243,6 +243,8 @@ export default {
                         '<div><strong>' + marker.data.gleanable.name + '</strong></div>'
                         + '<div>' + marker.data.postal_code + ' ' + marker.data.city + '</div>'
                         + '<div><a style="color:blue" href="/locations/' + marker.data.id + '">Voir le détail</a></div>'
+
+                        + '<div><a style="color:blue" target="_blank" href="https://www.google.com/maps/search/' + marker.latitude + ',' + marker.longitude + '">Ouvrir dans Google Map</a></div>'
                     )
                     infoWindow.open({
                         anchor: m,

@@ -4,12 +4,12 @@ import AuthenticationCardLogo from '@/Components/AuthenticationCardLogo.vue'
 import AppLayout from '@/Layouts/AppLayout.vue'
 
 defineProps({
-    policy: String
+    about: String
 })
 </script>
 
 <template>
-    <Head title="Privacy Policy" />
+    <Head title="À propos" />
 
     <AppLayout>
         <div class="font-sans text-gray-900 antialiased">
@@ -21,7 +21,7 @@ defineProps({
 
                     <div
                         class="w-full sm:max-w-2xl mt-6 p-6 bg-white shadow-md overflow-hidden sm:rounded-lg prose"
-                        v-html="policy"
+                        v-html="about"
                     />
                 </div>
             </div>

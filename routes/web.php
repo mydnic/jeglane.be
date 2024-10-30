@@ -9,6 +9,7 @@ use Laravel\Jetstream\Http\Controllers\Inertia\PrivacyPolicyController;
 use Laravel\Jetstream\Http\Controllers\Inertia\TermsOfServiceController;
 
 Route::get('/', [HomeController::class, 'home'])->name('home');
+Route::get('/a-propos', [HomeController::class, 'about'])->name('about');
 
 Route::middleware([
     'auth:sanctum',

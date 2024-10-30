@@ -51,7 +51,9 @@
                     <div class="mt-10 grid max-w-xl grid-cols-1 gap-8 text-base leading-7 text-gray-700 lg:max-w-none lg:grid-cols-2">
                         <div>
                             <p>Le glanage est une pratique ancestrale qui consiste à récolter des légumes, fruits et autres produits qui restent dans les champs après la récolte principale. C’est une manière de réduire le gaspillage alimentaire tout en profitant de produits frais et locaux.</p>
-                            <p>Il est cependant important d'avoir l'accord de l'agriculteur !</p>
+                            <p class="font-semibold">
+                                Il est cependant important d'avoir l'accord de l'agriculteur !
+                            </p>
                         </div>
                         <div>
                             <p>Sur Jeglane.be, vous pouvez explorer une carte interactive des champs ouverts au glanage, partager vos découvertes avec d'autres glaneurs et trouver des produits frais près de chez vous.</p>
@@ -159,11 +161,11 @@
                     </p>
                     <div class="mt-10 flex items-center justify-center gap-x-6">
                         <a
-                            href="#"
+                            :href="route('locations.index')"
                             class="rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-sm hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
                         >Commencez à Glaner !</a>
                         <a
-                            href="#"
+                            :href="route('register')"
                             class="text-sm font-semibold leading-6 text-white"
                         >Inscrivez-vous Gratuitement</a>
                     </div>
@@ -184,7 +186,7 @@
                                 <stop stop-color="#7775D6" />
                                 <stop
                                     offset="1"
-                                    stop-color="#E935C1"
+                                    stop-color="#10b981"
                                 />
                             </radialGradient>
                         </defs>
@@ -192,8 +194,6 @@
                 </div>
             </div>
         </div>
-
-        <AppFooter />
     </AppLayout>
 </template>
 

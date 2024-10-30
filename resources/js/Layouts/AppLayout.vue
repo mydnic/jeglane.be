@@ -15,6 +15,7 @@ defineProps({
         <!-- Page Content -->
         <main class="grow overflow-auto">
             <slot />
+            <AppFooter />
         </main>
         <Toast />
     </div>

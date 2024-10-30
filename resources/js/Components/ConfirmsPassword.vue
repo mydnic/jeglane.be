@@ -1,73 +1,72 @@
 <script setup>
-import { ref, reactive, nextTick } from 'vue';
-import DialogModal from './DialogModal.vue';
-import InputError from './InputError.vue';
-import PrimaryButton from './PrimaryButton.vue';
-import SecondaryButton from './SecondaryButton.vue';
-import TextInput from './TextInput.vue';
+import { ref, reactive, nextTick } from 'vue'
+import DialogModal from './DialogModal.vue'
+import InputError from './InputError.vue'
+import PrimaryButton from './PrimaryButton.vue'
+import SecondaryButton from './SecondaryButton.vue'
+import TextInput from './TextInput.vue'
 
-const emit = defineEmits(['confirmed']);
+const emit = defineEmits(['confirmed'])
 
 defineProps({
     title: {
         type: String,
-        default: 'Confirm Password',
+        default: 'Confirmer le mot de passe'
     },
     content: {
         type: String,
-        default: 'For your security, please confirm your password to continue.',
+        default: 'Pour des raisons de sécurité, veuillez confirmer votre mot de passe pour continuer.'
     },
     button: {
         type: String,
-        default: 'Confirm',
-    },
-});
+        default: 'Confirmer'
+    }
+})
 
-const confirmingPassword = ref(false);
+const confirmingPassword = ref(false)
 
 const form = reactive({
     password: '',
     error: '',
-    processing: false,
-});
+    processing: false
+})
 
-const passwordInput = ref(null);
+const passwordInput = ref(null)
 
 const startConfirmingPassword = () => {
-    axios.get(route('password.confirmation')).then(response => {
+    axios.get(route('password.confirmation')).then((response) => {
         if (response.data.confirmed) {
-            emit('confirmed');
+            emit('confirmed')
         } else {
-            confirmingPassword.value = true;
+            confirmingPassword.value = true
 
-            setTimeout(() => passwordInput.value.focus(), 250);
+            setTimeout(() => passwordInput.value.focus(), 250)
         }
-    });
-};
+    })
+}
 
 const confirmPassword = () => {
-    form.processing = true;
+    form.processing = true
 
     axios.post(route('password.confirm'), {
-        password: form.password,
+        password: form.password
     }).then(() => {
-        form.processing = false;
+        form.processing = false
 
-        closeModal();
-        nextTick().then(() => emit('confirmed'));
-
-    }).catch(error => {
-        form.processing = false;
-        form.error = error.response.data.errors.password[0];
-        passwordInput.value.focus();
-    });
-};
+        closeModal()
+        nextTick().then(() => emit('confirmed'))
+    }).catch((error) => {
+        form.processing = false
+        form.error = error.response.data.errors.password[0]
+        passwordInput.value.focus()
+    })
+}
 
 const closeModal = () => {
-    confirmingPassword.value = false;
-    form.password = '';
-    form.error = '';
-};
+    confirmingPassword.value = false
+    form.password = ''
+    form.error = ''
+}
 </script>
 
 <template>
@@ -76,7 +75,10 @@ const closeModal = () => {
             <slot />
         </span>
 
-        <DialogModal :show="confirmingPassword" @close="closeModal">
+        <DialogModal
+            :show="confirmingPassword"
+            @close="closeModal"
+        >
             <template #title>
                 {{ title }}
             </template>
@@ -90,18 +92,21 @@ const closeModal = () => {
                         v-model="form.password"
                         type="password"
                         class="mt-1 block w-3/4"
-                        placeholder="Password"
+                        placeholder="Mot de passe"
                         autocomplete="current-password"
                         @keyup.enter="confirmPassword"
                     />
 
-                    <InputError :message="form.error" class="mt-2" />
+                    <InputError
+                        :message="form.error"
+                        class="mt-2"
+                    />
                 </div>
             </template>
 
             <template #footer>
                 <SecondaryButton @click="closeModal">
-                    Cancel
+                    Annuler
                 </SecondaryButton>
 
                 <PrimaryButton

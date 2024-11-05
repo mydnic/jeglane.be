@@ -156,4 +156,6 @@ return [
         ]),
     ],
 
+    'social_providers' => ['google', 'facebook'],
+
 ];

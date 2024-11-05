@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\SocialController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LocationController;
 use Illuminate\Foundation\Application;
@@ -22,3 +23,10 @@ Route::middleware([
 
 Route::get('locations', [LocationController::class, 'index'])->name('locations.index');
 Route::get('locations/{gleaningLocation}', [LocationController::class, 'show'])->name('locations.show');
+
+// Social Auth
+
+Route::middleware('guest')->prefix('auth/social/{provider}')->group(function () {
+    Route::get('redirect', [SocialController::class, 'redirect'])->name('social.redirect');
+    Route::get('callback', [SocialController::class, 'callback'])->name('social.callback');
+})->whereIn('category', config('fortify.social_providers'));

@@ -16,6 +16,8 @@ class SocialController extends Controller
     {
         $user = Socialite::driver($provider)->user();
 
+        ld($provider, $user);
+
         // $user->token
     }
 }

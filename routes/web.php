@@ -18,14 +18,13 @@ Route::middleware([
     'verified',
 ])->group(function () {
     Route::get('/locations/create', [LocationController::class, 'create'])->name('locations.create');
-    Route::post('/locations', [LocationController::class, 'store'])->name('locations.store');
+    Route::post('/locations', [LocationController::class, 'store'])->name('locations.store')->middleware('optimizeImages');
 });
 
 Route::get('locations', [LocationController::class, 'index'])->name('locations.index');
 Route::get('locations/{gleaningLocation}', [LocationController::class, 'show'])->name('locations.show');
 
 // Social Auth
-
 Route::middleware('guest')->prefix('auth/social/{provider}')->group(function () {
     Route::get('redirect', [SocialController::class, 'redirect'])->name('social.redirect');
     Route::get('callback', [SocialController::class, 'callback'])->name('social.callback');

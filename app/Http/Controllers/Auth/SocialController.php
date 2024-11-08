@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
 
 class SocialController extends Controller
@@ -17,7 +18,7 @@ class SocialController extends Controller
     {
         $user = Socialite::driver($provider)->user();
 
-        User::updateOrCreate(
+        $user = User::updateOrCreate(
             [
                 'social_provider' => $provider,
                 'social_provider_id' => $user->getId(),
@@ -28,5 +29,9 @@ class SocialController extends Controller
                 'avatar' => $user->getAvatar(),
             ]
         );
+
+        Auth::login($user);
+
+        return redirect()->route('home');
     }
 }

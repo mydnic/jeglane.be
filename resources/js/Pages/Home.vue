@@ -1,4 +1,6 @@
 <template>
+    <Head title="Trouver des lieux de glanage en Belgique" />
+
     <AppLayout>
         <div class="relative isolate overflow-hidden bg-gradient-to-b from-emerald-100/20 pt-14">
             <div
@@ -198,10 +200,11 @@
 </template>
 
 <script>
+import { Head } from '@inertiajs/vue3'
 import AppLayout from '@/Layouts/AppLayout.vue'
 
 export default {
     name: 'Home',
-    components: { AppLayout }
+    components: { Head, AppLayout }
 }
 </script>

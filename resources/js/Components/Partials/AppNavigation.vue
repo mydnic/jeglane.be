@@ -17,12 +17,17 @@
                 <Button
                     type="button"
                     text
-                    :label="$page.props.auth.user.name"
                     severity="secondary"
                     aria-haspopup="true"
                     aria-controls="overlay_menu"
                     @click="toggle"
-                />
+                >
+                    <Avatar
+                        :image="$page.props.auth.user.profile_photo_url"
+                        shape="circle"
+                    />
+                    {{ $page.props.auth.user.name }}
+                </Button>
 
                 <Menu
                     id="overlay_menu"

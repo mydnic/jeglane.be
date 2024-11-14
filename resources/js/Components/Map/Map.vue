@@ -250,8 +250,6 @@ export default {
                         anchor: m,
                         map
                     })
-
-                    console.log(infoWindow)
                 })
 
                 this.markersArray.push(m)

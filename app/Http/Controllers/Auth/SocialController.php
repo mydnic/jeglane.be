@@ -27,7 +27,7 @@ class SocialController extends Controller
             [
                 'email' => $user->getEmail(),
                 'name' => $user->getName(),
-                'avatar' => $user->getAvatar(),
+                'profile_photo_url' => $user->getAvatar(),
                 'password' => bcrypt(Str::random()),
             ]
         );

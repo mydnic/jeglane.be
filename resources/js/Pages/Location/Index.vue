@@ -1,83 +1,73 @@
 <template>
     <AppLayout class="bg-slate-50">
-        <div class="p-4">
-            <div class="md:hidden block pb-5">
+        <div class="max-w-7xl mx-auto py-6 space-y-6 px-4 md:px-0">
+            <div class="border-b border-gray-200 pb-5">
                 <h3 class="text-base font-semibold leading-6 text-gray-900">
                     Trouver un lieu de glanage
                 </h3>
             </div>
-            <div class="flex md:flex-row flex-col md:h-[90vh] md:p-8">
-                <div class="order-last md:order-first h-full max-h-full md:w-1/2 xl:w-1/3 overflow-auto">
-                    <Card>
-                        <template #title>
-                            Trouver un lieu
-                        </template>
-                        <template #content>
-                            <DataView :value="locations">
-                                <template #list="slotProps">
-                                    <div class="flex flex-col">
-                                        <div
-                                            v-for="(item, index) in slotProps.items"
-                                            :key="index"
-                                        >
-                                            <div
-                                                class="flex flex-col md:flex-row sm:items-center py-3 gap-4"
-                                                :class="{ 'border-t border-surface-200 dark:border-surface-700': index !== 0 }"
-                                            >
-                                                <img
-                                                    class="block xl:block mx-auto rounded w-full md:w-1/4 shrink-0"
-                                                    :src="`${item.files[0]}`"
-                                                    :alt="item.name"
-                                                >
-                                                <div class="flex flex-col md:flex-row justify-between md:items-center flex-1 gap-6">
-                                                    <div class="text-center">
-                                                        <span class="font-medium text-surface-500 dark:text-surface-400 text-sm">
-                                                            {{ item.postal_code }} {{ item.city }}
-                                                        </span>
-                                                        <div class="text-lg font-medium mt-2">
-                                                            {{ item.gleanable.name }}
-                                                        </div>
-                                                    </div>
-                                                    <div class="flex md:items-end gap-8">
-                                                        <Button
-                                                            icon="pi pi-map-marker"
-                                                            label="Voir sur la carte"
-                                                            size="small"
-                                                            @click="() => $refs.mainMap.centerOn(item.latitude, item.longitude)"
-                                                        />
-                                                        <Button
-                                                            as="Link"
-                                                            :href="`/locations/${item.id}`"
-                                                            icon="pi pi-external-link"
-                                                            outlined
-                                                            label="Ouvrir le détail"
-                                                            size="small"
-                                                        />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </template>
-                            </DataView>
-                        </template>
-                    </Card>
-                </div>
 
-                <div class="w-full mb-6 md:mb-0 p-3 shadow-sm rounded-xl bg-white">
-                    <Map
-                        ref="mainMap"
-                        class="w-full h-full min-h-[40vh]"
-                        :markers="locations.map(l => ({
-                            id: l.id,
-                            latitude: l.latitude,
-                            longitude: l.longitude,
-                            html: `<h1>${l.description}</h1>`,
-                            data: l
-                        }))"
-                        @center-changed="onCenterChanged"
-                        @zoom-changed="onZoomChanged"
-                    />
+            <div>
+                <div class="flex md:flex-row flex-col md:h-[80vh] -mx-4">
+                    <div class="order-last md:order-first h-full max-h-full md:w-1/2 xl:w-1/3 overflow-auto px-4">
+                        <div class="flex-col space-y-4">
+                            <div
+                                v-for="(item, index) in locations"
+                                :key="index"
+                            >
+                                <Card
+                                    class="py-3"
+                                    :class="{ 'border-t border-surface-200 dark:border-surface-700': index !== 0 }"
+                                >
+                                    <template #content>
+                                        <div>
+                                            <div class="text-lg font-medium">
+                                                {{ item.gleanable.name }}
+                                            </div>
+                                            <span class="font-medium text-surface-500 dark:text-surface-400 text-sm">
+                                                {{ item.postal_code }} {{ item.city }}
+                                            </span>
+                                        </div>
+                                        <div class="flex md:items-end mt-3 justify-end gap-3">
+                                            <Button
+                                                icon="pi pi-map-marker"
+                                                size="small"
+                                                @click="() => $refs.mainMap.centerOn(item.latitude, item.longitude)"
+                                            />
+                                            <Button
+                                                as="Link"
+                                                :href="`/locations/${item.id}`"
+                                                icon="pi pi-external-link"
+                                                outlined
+                                                size="small"
+                                            />
+                                        </div>
+                                    </template>
+                                    <!--                                                <img -->
+                                    <!--                                                    class="block xl:block mx-auto rounded w-full md:w-1/4 shrink-0" -->
+                                    <!--                                                    :src="`${item.files[0]}`" -->
+                                    <!--                                                    :alt="item.name" -->
+                                    <!--                                                > -->
+                                </Card>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="w-full mb-6 md:mb-0 p-3 shadow-sm rounded-xl bg-white mr-4">
+                        <Map
+                            ref="mainMap"
+                            class="w-full h-full min-h-[40vh]"
+                            :markers="locations.map(l => ({
+                                id: l.id,
+                                latitude: l.latitude,
+                                longitude: l.longitude,
+                                html: `<h1>${l.description}</h1>`,
+                                data: l
+                            }))"
+                            @center-changed="onCenterChanged"
+                            @zoom-changed="onZoomChanged"
+                        />
+                    </div>
                 </div>
             </div>
         </div>

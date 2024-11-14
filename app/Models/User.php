@@ -29,7 +29,7 @@ class User extends Authenticatable
         'password',
         'avatar',
         'social_provider',
-        'social_provider_id',
+        'social_provider_id'
     ];
 
     /**
@@ -64,6 +64,15 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    protected function defaultProfilePhotoUrl()
+    {
+        $name = trim(collect(explode(' ', $this->name))->map(function ($segment) {
+            return mb_substr($segment, 0, 1);
+        })->join(' '));
+
+        return 'https://ui-avatars.com/api/?name='.urlencode($name).'&color=059669&background=ecfdf5';
     }
 
     public function gleaningLocations()

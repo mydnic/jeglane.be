@@ -10,9 +10,14 @@
             >
         </Head>
         <div class="px-4 container grid lg:grid-cols-2 gap-6 mx-auto py-8">
-            <h1 class="text-xl">
-                Glanage de {{ gleaningLocation.gleanable.name }} à {{ gleaningLocation.postal_code }} {{ gleaningLocation.city }}
-            </h1>
+            <div class="flex justify-between lg:col-span-2 items-center">
+                <h1 class="text-xl">
+                    Glanage de {{ gleaningLocation.gleanable.name }} à {{ gleaningLocation.postal_code }} {{ gleaningLocation.city }}
+                </h1>
+                <p class="text-sm text-gray-500">
+                    {{ $dayjs(gleaningLocation.created_at).format('DD/MM/YYYY') }}
+                </p>
+            </div>
 
             <Map
                 ref="mainMap"

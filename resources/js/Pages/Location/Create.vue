@@ -9,8 +9,8 @@
         >
     </Head>
 
-    <AppLayout class="bg-slate-900/5">
-        <div class="container mx-auto py-6 space-y-6 px-4 md:px-0">
+    <AppLayout class="bg-slate-50">
+        <div class="container mx-auto py-6 space-y-6">
             <div class="border-b border-gray-200 pb-5">
                 <h3 class="text-base font-semibold leading-6 text-gray-900">
                     Soumettre un lieu de glanage
@@ -30,6 +30,9 @@
                     </Step>
                     <Step value="3">
                         Photos
+                    </Step>
+                    <Step value="4">
+                        Validation
                     </Step>
                 </StepList>
                 <StepPanels>
@@ -185,6 +188,7 @@
                                     <div class="grid mt-6 grid-cols-2 gap-4 md:grid-cols-3">
                                         <div
                                             v-for="image in formData.fileUrls"
+                                            :key="image"
                                             class="relative flex-col flex items-center"
                                         >
                                             <img
@@ -211,6 +215,51 @@
                                         severity="secondary"
                                         icon="pi pi-arrow-left"
                                         @click="activateCallback('2')"
+                                    />
+                                    <Button
+                                        label="Suivant"
+                                        class="w-full"
+                                        icon="pi pi-check"
+                                        icon-pos="right"
+                                        @click="activateCallback('4')"
+                                    />
+                                </div>
+                            </template>
+                        </Card>
+                    </StepPanel>
+
+                    <StepPanel
+                        v-slot="{ activateCallback }"
+                        value="4"
+                    >
+                        <Card>
+                            <template #title>
+                                Validation
+                            </template>
+                            <template #content>
+                                <div class="py-6">
+                                    <div class="flex items-center gap-2">
+                                        <Checkbox
+                                            v-model="formData.confirmed"
+                                            input-id="confirmed"
+                                            name="confirmed"
+                                            value="true"
+                                        />
+                                        <label for="confirmed">
+                                            Je confirme que les informations sont correctes et que je suis autorisé à les soumettre.
+                                        </label>
+                                    </div>
+                                </div>
+                            </template>
+
+                            <template #footer>
+                                <div class="flex gap-4 mt-5">
+                                    <Button
+                                        label="Précédent"
+                                        class="w-full"
+                                        severity="secondary"
+                                        icon="pi pi-arrow-left"
+                                        @click="activateCallback('3')"
                                     />
                                     <Button
                                         label="Soumettre"
@@ -244,6 +293,7 @@ export default {
                 city: null,
                 postal_code: null,
                 description: null,
+                confirmed: false,
                 fileUrls: []
             },
             files: []

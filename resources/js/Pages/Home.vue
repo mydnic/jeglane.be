@@ -159,7 +159,7 @@
                         Rejoignez la communauté !
                     </h2>
                     <p class="mx-auto mt-6 max-w-xl text-lg leading-8 text-gray-300">
-                        Inscrivez-vous dès maintenant pour accéder à toutes les fonctionnalités de Jeglane.be : créez votre profil, ajoutez des lieux de glanage, envoyer des photos, vérifiez les soumissions, et bien plus encore.
+                        Inscrivez-vous dès maintenant pour accéder à toutes les fonctionnalités de Jeglane.be : créez votre profil, ajoutez des lieux de glanage, envoyez des photos, vérifiez les soumissions, et bien plus encore.
                     </p>
                     <div class="mt-10 flex items-center justify-center gap-x-6">
                         <a

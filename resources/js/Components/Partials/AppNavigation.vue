@@ -1,5 +1,6 @@
 <template>
     <Menubar
+        class="fixed w-full z-20"
         :model="items"
     >
         <template #start>

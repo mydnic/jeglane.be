@@ -46,7 +46,7 @@
                 </a>
             </div>
             <p class="mt-10 text-center text-sm/6 text-gray-600">
-                &copy; {{ $dayjs(new Date()).format('YYYY') }} MY DYNAMIC PRODUCTION SRL. Tous droits réservés.
+                &copy; {{ $dayjs(new Date()).format('YYYY') }} JeGlane.be - Tous droits réservés.
             </p>
         </div>
     </footer>

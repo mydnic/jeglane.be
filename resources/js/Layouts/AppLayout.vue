@@ -7,13 +7,13 @@ defineProps({
 </script>
 
 <template>
-    <div class="h-screen flex flex-col">
+    <div>
         <Head :title="title" />
 
         <AppNavigation />
 
         <!-- Page Content -->
-        <main class="grow overflow-auto">
+        <main class="pt-16 px-4">
             <slot />
             <AppFooter />
         </main>

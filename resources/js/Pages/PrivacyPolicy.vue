@@ -11,9 +11,9 @@ defineProps({
 <template>
     <Head title="Privacy Policy" />
 
-    <AppLayout>
+    <AppLayout class="bg-gray-100">
         <div class="font-sans text-gray-900 antialiased">
-            <div class="pt-4 bg-gray-100">
+            <div class="pt-4">
                 <div class="min-h-screen flex flex-col items-center py-6 sm:pt-0">
                     <div>
                         <AuthenticationCardLogo />

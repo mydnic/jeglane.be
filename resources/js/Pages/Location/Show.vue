@@ -51,7 +51,15 @@
 
             <Card>
                 <template #title>
-                    Soumis par {{ gleaningLocation.user.name }}
+                    <div class="flex items-center">
+                        Soumis par
+                        <span class="ml-1">{{ gleaningLocation.user.name }}</span>
+                        <Avatar
+                            :image="gleaningLocation.user.profile_photo_url"
+                            shape="circle"
+                            class="ml-2"
+                        />
+                    </div>
                 </template>
                 <template #subtitle>
                     Le {{ $dayjs(gleaningLocation.created_at).format('DD/MM/YYYY') }}

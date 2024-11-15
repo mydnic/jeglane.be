@@ -11,7 +11,7 @@ import ToastService from 'primevue/toastservice'
 import dayjs from 'dayjs'
 import { ZiggyVue } from '../../vendor/tightenco/ziggy'
 
-const appName = import.meta.env.VITE_APP_NAME || 'Laravel'
+const appName = import.meta.env.VITE_APP_NAME || 'Jeglane.be'
 
 createInertiaApp({
     title: title => `${title} - ${appName}`,

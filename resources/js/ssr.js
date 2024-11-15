@@ -1,25 +1,45 @@
-import { createSSRApp, h } from 'vue';
-import { renderToString } from '@vue/server-renderer';
-import { createInertiaApp } from '@inertiajs/vue3';
-import createServer from '@inertiajs/vue3/server';
-import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
-import { ZiggyVue } from '../../vendor/tightenco/ziggy';
+import './bootstrap'
+import '../css/app.css'
+import 'primeicons/primeicons.css'
 
-const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
+import { createSSRApp, h } from 'vue'
+import { renderToString } from '@vue/server-renderer'
+import { createInertiaApp, Head, Link } from '@inertiajs/vue3'
+import createServer from '@inertiajs/vue3/server'
+import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers'
+import Aura from '@primevue/themes/aura'
+import PrimeVue from 'primevue/config'
+import ToastService from 'primevue/toastservice'
+import dayjs from 'dayjs'
+import { ZiggyVue } from '../../vendor/tightenco/ziggy'
 
-createServer((page) =>
+const appName = import.meta.env.VITE_APP_NAME || 'Jeglane.be'
+
+createServer(page =>
     createInertiaApp({
         page,
         render: renderToString,
-        title: (title) => `${title} - ${appName}`,
-        resolve: (name) => resolvePageComponent(`./Pages/${name}.vue`, import.meta.glob('./Pages/**/*.vue')),
-        setup({ App, props, plugin }) {
-            return createSSRApp({ render: () => h(App, props) })
+        title: title => `${title} - ${appName}`,
+        resolve: name => resolvePageComponent(`./Pages/${name}.vue`, import.meta.glob('./Pages/**/*.vue')),
+        setup ({ el, App, props, plugin }) {
+            const app = createSSRApp({ render: () => h(App, props) })
                 .use(plugin)
-                .use(ZiggyVue, {
-                    ...page.props.ziggy,
-                    location: new URL(page.props.ziggy.location),
-                });
-        },
+                .use(ZiggyVue)
+                .use(PrimeVue, {
+                    theme: {
+                        preset: Aura,
+                        options: {
+                            darkModeSelector: 'disabled'
+                        }
+                    }
+                })
+                .use(ToastService)
+                .component('Link', Link)
+                .component('Head', Head)
+
+            app.config.globalProperties.$dayjs = dayjs
+
+            return app.mount(el)
+        }
     })
-);
+)

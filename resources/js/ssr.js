@@ -21,7 +21,7 @@ createServer(page =>
         render: renderToString,
         title: title => `${title} - ${appName}`,
         resolve: name => resolvePageComponent(`./Pages/${name}.vue`, import.meta.glob('./Pages/**/*.vue')),
-        setup ({ el, App, props, plugin }) {
+        setup ({ App, props, plugin }) {
             const app = createSSRApp({ render: () => h(App, props) })
                 .use(plugin)
                 .use(ZiggyVue)
@@ -39,7 +39,7 @@ createServer(page =>
 
             app.config.globalProperties.$dayjs = dayjs
 
-            return app.mount(el)
+            return app
         }
     })
 )

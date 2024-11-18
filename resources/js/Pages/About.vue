@@ -50,20 +50,6 @@ defineProps({
                         Jeglane.be. Que ce soit en partageant du code, en proposant des nouvelles fonctionnalités ou
                         simplement en rapportant des bugs, toutes les contributions sont les bienvenues.
                     </p>
-
-                    <h3>Un peu de philosophie</h3>
-                    <p>
-                        Je suis fan de Tolkien, et ses histoires m’inspirent souvent. Voici une citation qui, je trouve,
-                        colle bien à l’esprit du site :
-                    </p>
-                    <p>
-                        "All we have to decide is what to do with the time that is given us." ("Tout ce que nous avons à
-                        décider, c'est quoi faire du temps qui nous est imparti.")
-                    </p>
-                    <p>
-                        Pour moi, c’est un rappel qu’on peut tous agir, à notre échelle, pour créer des choses
-                        positives. Jeglane.be, c’est ma façon de faire un petit pas dans ce sens.
-                    </p>
                 </div>
             </div>
             <div class="bg-white py-16 sm:py-24">

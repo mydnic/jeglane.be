@@ -50,6 +50,30 @@ defineProps({
                         Jeglane.be. Que ce soit en partageant du code, en proposant des nouvelles fonctionnalités ou
                         simplement en rapportant des bugs, toutes les contributions sont les bienvenues.
                     </p>
+                    <p>
+                        Pour contribuer au projet, rendez-vous sur <a
+                            href="https://github.com/mydnic/jeglane.be"
+                            target="_blank"
+                            class="text-blue-600 underline"
+                        >GitHub</a>.
+                    </p>
+
+                    <h3>Des suggestions, problèmes à rapporter ?</h3>
+                    <p>
+                        Si vous avez des suggestions, des idées d’améliorations ou des problèmes à rapporter, n’hésitez
+                        pas à me contacter par mail à <a
+                            class="text-blue-600 underline"
+                            href="mailto:clement@jeglane.be"
+                        >clement@jeglane.be</a>. Je suis toujours à l’écoute et je ferai de mon mieux pour vous répondre
+                        rapidement.
+                    </p>
+                    <p>
+                        Vous pouvez aussi participer en soumettant vos suggestions ici : <a
+                            href="https://featureflow.tech/dashboard/cm3ea772c0001b2ubluwceqwi"
+                            target="_blank"
+                            class="text-blue-600 underline"
+                        >https://featureflow.tech/dashboard/cm3ea772c0001b2ubluwceqwi</a>
+                    </p>
                 </div>
             </div>
             <div class="bg-white py-16 sm:py-24">

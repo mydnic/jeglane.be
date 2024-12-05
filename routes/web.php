@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\SocialController;
+use App\Http\Controllers\ChangelogController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\VoteController;
@@ -25,6 +26,8 @@ Route::middleware([
 
 Route::get('locations', [LocationController::class, 'index'])->name('locations.index');
 Route::get('locations/{gleaningLocation}', [LocationController::class, 'show'])->name('locations.show');
+
+Route::get('changelog', [ChangelogController::class, 'index'])->name('changelog.index');
 
 // Social Auth
 Route::middleware('guest')->prefix('auth/social/{provider}')->group(function () {

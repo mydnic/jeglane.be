@@ -13,6 +13,7 @@
         "laravel/sanctum": "^4.0",
         "laravel/socialite": "^5.16",
         "laravel/tinker": "^2.9",
+        "mydnic/changelog-commit-for-laravel": "^0.1.0",
         "spatie/laravel-image-optimizer": "^1.8",
         "spatie/laravel-log-dumper": "^1.5",
         "tightenco/ziggy": "^2.0"

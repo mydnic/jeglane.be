@@ -1,5 +1,14 @@
 <template>
     <AppLayout class="bg-slate-50">
+        <Head>
+            <title>
+                Trouver un lieu de glanage
+            </title>
+            <meta
+                name="description"
+                content="Trouvez un lieu de glanage en Belgique"
+            >
+        </Head>
         <div class="max-w-7xl mx-auto py-6 space-y-6 px-4 md:px-0">
             <div class="border-b border-gray-200 pb-5">
                 <h3 class="text-base font-semibold leading-6 text-gray-900">

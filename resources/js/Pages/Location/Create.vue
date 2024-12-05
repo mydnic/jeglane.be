@@ -1,15 +1,15 @@
 <template>
-    <Head>
-        <title>
-            Soumettre un lieu de glanage
-        </title>
-        <meta
-            name="description"
-            content="Soumettez un lieu de glanage pour que d'autres glaneurs puissent en profiter."
-        >
-    </Head>
 
     <AppLayout class="bg-slate-50">
+        <Head>
+            <title>
+                Soumettre un lieu de glanage
+            </title>
+            <meta
+                name="description"
+                content="Soumettez un lieu de glanage pour que d'autres glaneurs puissent en profiter."
+            >
+        </Head>
         <div class="container mx-auto py-6 space-y-6">
             <div class="border-b border-gray-200 pb-5">
                 <h3 class="text-base font-semibold leading-6 text-gray-900">

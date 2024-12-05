@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\SocialController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LocationController;
+use App\Http\Controllers\VoteController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -19,6 +20,7 @@ Route::middleware([
 ])->group(function () {
     Route::get('/locations/create', [LocationController::class, 'create'])->name('locations.create');
     Route::post('/locations', [LocationController::class, 'store'])->name('locations.store')->middleware('optimizeImages');
+    Route::post('/locations/{gleaningLocation}/vote', [VoteController::class, 'vote'])->name('locations.vote');
 });
 
 Route::get('locations', [LocationController::class, 'index'])->name('locations.index');

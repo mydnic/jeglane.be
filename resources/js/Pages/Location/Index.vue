@@ -28,7 +28,12 @@
                                                 {{ item.postal_code }} {{ item.city }}
                                             </span>
                                         </div>
-                                        <div class="flex md:items-end mt-3 justify-end gap-3">
+                                        <div class="flex md:items-end mt-3 gap-3">
+                                            <div class="text-sm text-surface-500 dark:text-surface-400 flex items-center gap-1">
+                                                <i class="pi pi-thumbs-up"></i>
+                                                {{ item.vote_count || 0 }}
+                                            </div>
+                                            <div class="grow"></div>
                                             <Button
                                                 icon="pi pi-map-marker"
                                                 size="small"

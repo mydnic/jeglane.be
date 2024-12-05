@@ -51,14 +51,33 @@
 
             <Card>
                 <template #title>
-                    <div class="flex items-center">
-                        Soumis par
-                        <span class="ml-1">{{ gleaningLocation.user.name }}</span>
-                        <Avatar
-                            :image="gleaningLocation.user.profile_photo_url"
-                            shape="circle"
-                            class="ml-2"
-                        />
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center">
+                            Soumis par
+                            <span class="ml-1">{{ gleaningLocation.user.name }}</span>
+                            <Avatar
+                                :image="gleaningLocation.user.profile_photo_url"
+                                shape="circle"
+                                class="ml-2"
+                            />
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <Button
+                                :disabled="!$page.props.auth.user"
+                                :outlined="!gleaningLocation.user_vote || gleaningLocation.user_vote.vote !== 1"
+                                icon="pi pi-chevron-up"
+                                severity="success"
+                                @click="vote(1)"
+                            />
+                            <span class="font-bold text-lg">{{ voteCount }}</span>
+                            <Button
+                                :disabled="!$page.props.auth.user"
+                                :outlined="!gleaningLocation.user_vote || gleaningLocation.user_vote.vote !== -1"
+                                icon="pi pi-chevron-down"
+                                severity="danger"
+                                @click="vote(-1)"
+                            />
+                        </div>
                     </div>
                 </template>
                 <template #subtitle>
@@ -84,7 +103,15 @@ import AppLayout from '@/Layouts/AppLayout.vue'
 
 export default {
     components: { AppLayout },
-    props: ['gleaningLocation'],
+    props: ['gleaningLocation', 'voteCount'],
+
+    methods: {
+        vote (value) {
+            this.$inertia.post(`/locations/${this.gleaningLocation.id}/vote`, {
+                vote: value
+            })
+        }
+    },
 
     created () {
         setTimeout(() => {

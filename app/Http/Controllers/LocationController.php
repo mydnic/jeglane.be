@@ -27,6 +27,9 @@ class LocationController extends Controller
             ->when(request()->has('postal_code'), function ($query) {
                 $query->where('postal_code', request('postal_code'));
             })
+            ->withCount(['votes as vote_count' => function($query) {
+                $query->select(\DB::raw('COALESCE(SUM(vote), 0)'));
+            }])
             ->orderBy('postal_code')
             ->get();
 
@@ -38,7 +41,15 @@ class LocationController extends Controller
     public function show(GleaningLocation $gleaningLocation)
     {
         $gleaningLocation->load('gleanable', 'user');
-        return inertia('Location/Show', compact('gleaningLocation'));
+
+        if (auth()->check()) {
+            $gleaningLocation->load('userVote');
+        }
+
+        return inertia('Location/Show', [
+            'gleaningLocation' => $gleaningLocation,
+            'voteCount' => $gleaningLocation->vote_count,
+        ]);
     }
 
     public function create()
@@ -63,6 +74,5 @@ class LocationController extends Controller
             ->create($request->only('latitude', 'longitude', 'city', 'postal_code', 'description', 'gleanable_id', 'files'));
 
         return redirect()->route('locations.show', $location);
-
     }
 }

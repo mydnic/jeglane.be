@@ -28,7 +28,7 @@ Vous avez les droits suivants concernant vos données personnelles :
 - **Accès et rectification** : Vous pouvez demander l'accès à vos données personnelles et corriger toute information inexacte.
 - **Suppression des données** : Vous pouvez demander la suppression de vos données personnelles à tout moment.
 
-Pour exercer ces droits, veuillez nous contacter à l'adresse e-mail suivante : [rigoclement@mydnic.be](mailto:rigoclement@mydnic.be).
+Pour exercer ces droits, veuillez nous contacter à l'adresse e-mail suivante : [clement@jeglane.be](mailto:clement@jeglane.be).
 
 ## 5. Sécurité des données
 
@@ -45,7 +45,7 @@ Nous prenons la sécurité de vos données très au sérieux et mettons en place
 ## 7. Contact
 
 Pour toute question concernant cette politique de confidentialité ou vos données personnelles, vous pouvez nous contacter à :  
-**Adresse e-mail** : [rigoclement@mydnic.be](mailto:rigoclement@mydnic.be)
+**Adresse e-mail** : [clement@jeglane.be](mailto:clement@jeglane.be)
 
 ## 8. Modifications de cette politique
 

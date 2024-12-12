@@ -43,4 +43,4 @@ Ces termes et conditions sont régis par les lois en vigueur en Belgique. En cas
 
 ## 8. Contact
 
-Pour toute question ou clarification concernant ces termes et conditions, veuillez nous contacter à l'adresse e-mail suivante : [rigoclement@mydnic.be](mailto:rigoclement@mydnic.be).
+Pour toute question ou clarification concernant ces termes et conditions, veuillez nous contacter à l'adresse e-mail suivante : [clement@jeglane.be](mailto:clement@jeglane.be).

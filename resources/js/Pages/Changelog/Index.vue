@@ -9,13 +9,27 @@
         </Head>
         <div class="max-w-7xl mx-auto py-6 space-y-6 px-4 md:px-0">
             <div class="border-b border-gray-200 pb-5">
-                <h3 class="text-base font-semibold leading-6 text-gray-900">
-                    Changelog
-                </h3>
-                <p class="mt-2 text-sm text-gray-500">
-                    Historique des modifications de l'application
-                </p>
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h3 class="text-base font-semibold leading-6 text-gray-900">
+                            Changelog
+                        </h3>
+                        <p class="mt-2 text-sm text-gray-500">
+                            Historique des modifications de l'application
+                        </p>
+                    </div>
+                    <div>
+                        <Button
+                            as="a"
+                            href="https://featureflow.tech/dashboard/cm3ea772c0001b2ubluwceqwi"
+                        >
+                            Suggestions et idées d'amélioration
+                        </Button>
+                    </div>
+                </div>
             </div>
+
+            <div class="text-center" />
 
             <div class="bg-white shadow rounded-lg p-6">
                 <div v-if="groupedChangelog && Object.keys(groupedChangelog).length > 0">
@@ -38,7 +52,10 @@
                         </ul>
                     </div>
                 </div>
-                <div v-else class="text-center text-gray-500 py-8">
+                <div
+                    v-else
+                    class="text-center text-gray-500 py-8"
+                >
                     Aucun changement à afficher pour le moment.
                 </div>
 
@@ -49,10 +66,10 @@
                     <Button
                         :loading="isLoading"
                         :disabled="isLoading"
-                        @click="loadMore"
                         class="w-full sm:w-auto"
+                        @click="loadMore"
                     >
-                        <i class="pi pi-refresh mr-2"></i>
+                        <i class="pi pi-refresh mr-2" />
                         Charger plus
                     </Button>
                 </div>
@@ -63,9 +80,9 @@
 
 <script>
 import { defineComponent } from 'vue'
-import AppLayout from '@/Layouts/AppLayout.vue'
 import { Head } from '@inertiajs/vue3'
 import Button from 'primevue/button'
+import AppLayout from '@/Layouts/AppLayout.vue'
 
 export default defineComponent({
     components: {
@@ -81,7 +98,7 @@ export default defineComponent({
         }
     },
 
-    data() {
+    data () {
         return {
             items: [],
             currentPage: 1,
@@ -90,14 +107,8 @@ export default defineComponent({
         }
     },
 
-    created() {
-        this.items = this.changelogs.data
-        this.currentPage = this.changelogs.current_page
-        this.lastPage = this.changelogs.last_page
-    },
-
     computed: {
-        groupedChangelog() {
+        groupedChangelog () {
             return this.items.reduce((acc, item) => {
                 const key = item.date
                 if (!acc[key]) {
@@ -108,13 +119,19 @@ export default defineComponent({
             }, {})
         },
 
-        hasMorePages() {
+        hasMorePages () {
             return this.currentPage < this.lastPage
         }
     },
 
+    created () {
+        this.items = this.changelogs.data
+        this.currentPage = this.changelogs.current_page
+        this.lastPage = this.changelogs.last_page
+    },
+
     methods: {
-        formatDate(date) {
+        formatDate (date) {
             return new Date(date).toLocaleDateString('fr-FR', {
                 weekday: 'long',
                 year: 'numeric',
@@ -123,14 +140,14 @@ export default defineComponent({
             })
         },
 
-        async loadMore() {
+        async loadMore () {
             if (this.isLoading || !this.hasMorePages) return
 
             this.isLoading = true
             try {
                 const response = await fetch(`/changelog?page=${this.currentPage + 1}`)
                 const data = await response.json()
-                
+
                 this.items = [...this.items, ...data.data]
                 this.currentPage = data.current_page
                 this.lastPage = data.last_page

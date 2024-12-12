@@ -23,6 +23,12 @@
                 >
                     Vie privée
                 </Link>
+                <Link
+                    :href="route('changelog.index')"
+                    class="text-gray-600 hover:text-gray-900"
+                >
+                    Changelog
+                </Link>
             </nav>
             <div class="mt-16 flex justify-center gap-x-10">
                 <a

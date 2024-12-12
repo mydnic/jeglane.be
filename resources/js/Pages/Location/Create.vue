@@ -1,5 +1,4 @@
 <template>
-
     <AppLayout class="bg-slate-50">
         <Head>
             <title>
@@ -219,7 +218,7 @@
                                     <Button
                                         label="Suivant"
                                         class="w-full"
-                                        icon="pi pi-check"
+                                        icon="pi pi-arrow-right"
                                         icon-pos="right"
                                         @click="activateCallback('4')"
                                     />

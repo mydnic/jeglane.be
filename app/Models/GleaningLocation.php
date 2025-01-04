@@ -21,17 +21,15 @@ class GleaningLocation extends Model
         'postal_code',
         'latitude',
         'longitude',
-        'archived_at',
     ];
 
     protected $casts = [
         'files' => 'array',
-        'archived_at' => 'datetime',
     ];
 
-    public function scopeActive($query)
+    public function scopeActive()
     {
-        return $query->whereNull('archived_at');
+        return $this->whereDate('created_at', '>=', now()->subMonths(2));
     }
 
     public function user()

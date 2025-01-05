@@ -21,7 +21,7 @@
                     <div>
                         <Button
                             as="a"
-                            href="https://featureflow.tech/dashboard/cm3ea772c0001b2ubluwceqwi"
+                            href="https://featureflow.tech/ask/cm3ea772c0001b2ubluwceqwi/forit"
                         >
                             Suggestions et idées d'amélioration
                         </Button>

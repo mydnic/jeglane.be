@@ -69,10 +69,10 @@ defineProps({
                     </p>
                     <p>
                         Vous pouvez aussi participer en soumettant vos suggestions ici : <a
-                            href="https://featureflow.tech/dashboard/cm3ea772c0001b2ubluwceqwi"
+                            href="https://featureflow.tech/ask/cm3ea772c0001b2ubluwceqwi/forit"
                             target="_blank"
                             class="text-blue-600 underline"
-                        >https://featureflow.tech/dashboard/cm3ea772c0001b2ubluwceqwi</a>
+                        >https://featureflow.tech/ask/cm3ea772c0001b2ubluwceqwi/forit</a>
                     </p>
                 </div>
             </div>

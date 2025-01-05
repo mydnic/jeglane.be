@@ -105,18 +105,20 @@ export default {
     components: { AppLayout },
     props: ['gleaningLocation', 'voteCount'],
 
+    created () {
+        setTimeout(() => {
+            if (this.$refs?.mainMap) {
+                this.$refs.mainMap.centerOn(this.gleaningLocation.latitude, this.gleaningLocation.longitude)
+            }
+        }, 1000)
+    },
+
     methods: {
         vote (value) {
             this.$inertia.post(`/locations/${this.gleaningLocation.id}/vote`, {
                 vote: value
             })
         }
-    },
-
-    created () {
-        setTimeout(() => {
-            this.$refs.mainMap.centerOn(this.gleaningLocation.latitude, this.gleaningLocation.longitude)
-        }, 1000)
     }
 }
 </script>

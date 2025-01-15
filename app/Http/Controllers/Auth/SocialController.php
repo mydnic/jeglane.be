@@ -19,6 +19,19 @@ class SocialController extends Controller
     {
         $user = Socialite::driver($provider)->user();
 
+        $existingUserWithEmail = User::where('email', $user->getEmail())->first();
+
+        if ($existingUserWithEmail && $existingUserWithEmail->social_provider == null) {
+            $existingUserWithEmail->update([
+                'social_provider' => $provider,
+                'social_provider_id' => $user->getId(),
+            ]);
+
+            Auth::login($existingUserWithEmail);
+
+            return redirect()->route('home');
+        }
+
         $user = User::updateOrCreate(
             [
                 'social_provider' => $provider,

@@ -40,7 +40,10 @@ class LocationController extends Controller
 
     public function show(GleaningLocation $gleaningLocation)
     {
-        $gleaningLocation->load('gleanable', 'user');
+        $gleaningLocation->load(['gleanable', 'user']);
+        $gleaningLocation->loadMissing(['comments' => function($query) {
+            $query->whereNull('parent_id')->with('user', 'replies.user');
+        }]);
 
         if (auth()->check()) {
             $gleaningLocation->load('userVote');

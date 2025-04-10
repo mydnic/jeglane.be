@@ -94,16 +94,158 @@
                     </p>
                 </template>
             </Card>
+
+            <Card class="lg:col-span-2">
+                <template #title>
+                    Commentaires
+                </template>
+
+                <template #content>
+                    <div v-if="$page.props.auth.user" class="mb-6">
+                        <form @submit.prevent="submitComment">
+                            <Textarea
+                                v-model="form.content"
+                                placeholder="Laissez un commentaire..."
+                                :autoResize="true"
+                                rows="3"
+                                class="w-full"
+                            />
+                            <div class="flex justify-end mt-2">
+                                <Button
+                                    type="submit"
+                                    label="Commenter"
+                                    :loading="form.processing"
+                                />
+                            </div>
+                        </form>
+                    </div>
+
+                    <div v-else class="mb-6 text-center">
+                        <p class="text-gray-600">Connectez-vous pour laisser un commentaire</p>
+                        <Link :href="route('login')" class="text-primary-600">Se connecter</Link>
+                    </div>
+
+                    <div class="space-y-6">
+                        <div v-for="comment in gleaningLocation.comments" :key="comment.id">
+                            <div class="flex gap-4">
+                                <Avatar
+                                    :image="comment.user.profile_photo_url"
+                                    shape="circle"
+                                />
+                                <div class="flex-1">
+                                    <div class="flex items-center justify-between">
+                                        <div class="font-medium">{{ comment.user.name }}</div>
+                                        <div class="text-sm text-gray-500">
+                                            {{ $dayjs(comment.created_at).format('DD/MM/YYYY HH:mm') }}
+                                        </div>
+                                    </div>
+                                    <p class="mt-1">{{ comment.content }}</p>
+                                    <div class="mt-2 flex gap-4">
+                                        <Button
+                                            v-if="$page.props.auth.user"
+                                            text
+                                            size="small"
+                                            label="Répondre"
+                                            @click="replyTo(comment)"
+                                        />
+                                        <Button
+                                            v-if="$page.props.auth.user && $page.props.auth.user.id === comment.user_id"
+                                            severity="danger"
+                                            text
+                                            size="small"
+                                            label="Supprimer"
+                                            @click="deleteComment(comment.id)"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Nested replies -->
+                            <div v-if="comment.replies && comment.replies.length" class="ml-12 mt-4 space-y-4">
+                                <div v-for="reply in comment.replies" :key="reply.id" class="flex gap-4">
+                                    <Avatar
+                                        :image="reply.user.profile_photo_url"
+                                        shape="circle"
+                                    />
+                                    <div class="flex-1">
+                                        <div class="flex items-center justify-between">
+                                            <div class="font-medium">{{ reply.user.name }}</div>
+                                            <div class="text-sm text-gray-500">
+                                                {{ $dayjs(reply.created_at).format('DD/MM/YYYY HH:mm') }}
+                                            </div>
+                                        </div>
+                                        <p class="mt-1">{{ reply.content }}</p>
+                                        <div v-if="$page.props.auth.user && $page.props.auth.user.id === reply.user_id" class="mt-2">
+                                            <Button
+                                                severity="danger"
+                                                text
+                                                size="small"
+                                                label="Supprimer"
+                                                @click="deleteComment(reply.id)"
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Reply form -->
+                            <div v-if="replyingTo === comment.id" class="ml-12 mt-4">
+                                <form @submit.prevent="submitReply(comment.id)">
+                                    <Textarea
+                                        v-model="replyForm.content"
+                                        :placeholder="'Répondre à ' + comment.user.name"
+                                        :autoResize="true"
+                                        rows="2"
+                                        class="w-full"
+                                    />
+                                    <div class="flex justify-end gap-2 mt-2">
+                                        <Button
+                                            text
+                                            size="small"
+                                            label="Annuler"
+                                            @click="cancelReply"
+                                        />
+                                        <Button
+                                            type="submit"
+                                            size="small"
+                                            label="Répondre"
+                                            :loading="replyForm.processing"
+                                        />
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                        <div v-if="!gleaningLocation.comments.length" class="text-center text-gray-500">
+                            Aucun commentaire pour le moment
+                        </div>
+                    </div>
+                </template>
+            </Card>
         </div>
     </AppLayout>
 </template>
 
 <script>
 import AppLayout from '@/Layouts/AppLayout.vue'
+import { useForm } from '@inertiajs/vue3'
 
 export default {
     components: { AppLayout },
     props: ['gleaningLocation', 'voteCount'],
+
+    data() {
+        return {
+            form: useForm({
+                content: '',
+            }),
+            replyForm: useForm({
+                content: '',
+                parent_id: null,
+            }),
+            replyingTo: null,
+        }
+    },
 
     created () {
         setTimeout(() => {
@@ -118,7 +260,44 @@ export default {
             this.$inertia.post(`/locations/${this.gleaningLocation.id}/vote`, {
                 vote: value
             })
-        }
+        },
+
+        submitComment() {
+            this.form.post(route('locations.comments.store', this.gleaningLocation.id), {
+                preserveScroll: true,
+                onSuccess: () => {
+                    this.form.reset()
+                },
+            })
+        },
+
+        replyTo(comment) {
+            this.replyingTo = comment.id
+            this.replyForm.parent_id = comment.id
+        },
+
+        cancelReply() {
+            this.replyingTo = null
+            this.replyForm.reset()
+        },
+
+        submitReply(commentId) {
+            this.replyForm.post(route('locations.comments.store', this.gleaningLocation.id), {
+                preserveScroll: true,
+                onSuccess: () => {
+                    this.replyForm.reset()
+                    this.replyingTo = null
+                },
+            })
+        },
+
+        deleteComment(commentId) {
+            if (confirm('Êtes-vous sûr de vouloir supprimer ce commentaire ?')) {
+                this.$inertia.delete(route('locations.comments.destroy', [this.gleaningLocation.id, commentId]), {
+                    preserveScroll: true,
+                })
+            }
+        },
     }
 }
 </script>

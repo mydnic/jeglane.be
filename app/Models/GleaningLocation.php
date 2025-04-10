@@ -47,6 +47,11 @@ class GleaningLocation extends Model
         return $this->hasMany(Vote::class);
     }
 
+    public function comments(): HasMany
+    {
+        return $this->hasMany(Comment::class);
+    }
+
     public function userVote()
     {
         return $this->hasOne(Vote::class)->where('user_id', auth()->id());

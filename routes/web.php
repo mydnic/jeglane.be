@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\SocialController;
 use App\Http\Controllers\ChangelogController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\VoteController;
@@ -22,6 +23,8 @@ Route::middleware([
     Route::get('/locations/create', [LocationController::class, 'create'])->name('locations.create');
     Route::post('/locations', [LocationController::class, 'store'])->name('locations.store')->middleware('optimizeImages');
     Route::post('/locations/{gleaningLocation}/vote', [VoteController::class, 'vote'])->name('locations.vote');
+    Route::post('/locations/{gleaningLocation}/comments', [CommentController::class, 'store'])->name('locations.comments.store');
+    Route::delete('/locations/{gleaningLocation}/comments/{comment}', [CommentController::class, 'destroy'])->name('locations.comments.destroy');
 });
 
 Route::get('locations', [LocationController::class, 'index'])->name('locations.index');

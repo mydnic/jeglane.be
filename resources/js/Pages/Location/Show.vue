@@ -85,7 +85,7 @@
                 </template>
 
                 <template #content>
-                    <p class="m-0">
+                    <p class="m-0 overflow-hidden">
                         {{
                             gleaningLocation.description
                                 ? gleaningLocation.description
@@ -101,12 +101,15 @@
                 </template>
 
                 <template #content>
-                    <div v-if="$page.props.auth.user" class="mb-6">
+                    <div
+                        v-if="$page.props.auth.user"
+                        class="mb-6"
+                    >
                         <form @submit.prevent="submitComment">
                             <Textarea
                                 v-model="form.content"
                                 placeholder="Laissez un commentaire..."
-                                :autoResize="true"
+                                :auto-resize="true"
                                 rows="3"
                                 class="w-full"
                             />
@@ -120,13 +123,26 @@
                         </form>
                     </div>
 
-                    <div v-else class="mb-6 text-center">
-                        <p class="text-gray-600">Connectez-vous pour laisser un commentaire</p>
-                        <Link :href="route('login')" class="text-primary-600">Se connecter</Link>
+                    <div
+                        v-else
+                        class="mb-6 text-center"
+                    >
+                        <p class="text-gray-600">
+                            Connectez-vous pour laisser un commentaire
+                        </p>
+                        <Link
+                            :href="route('login')"
+                            class="text-primary-600"
+                        >
+                            Se connecter
+                        </Link>
                     </div>
 
                     <div class="space-y-6">
-                        <div v-for="comment in gleaningLocation.comments" :key="comment.id">
+                        <div
+                            v-for="comment in gleaningLocation.comments"
+                            :key="comment.id"
+                        >
                             <div class="flex gap-4">
                                 <Avatar
                                     :image="comment.user.profile_photo_url"
@@ -134,12 +150,16 @@
                                 />
                                 <div class="flex-1">
                                     <div class="flex items-center justify-between">
-                                        <div class="font-medium">{{ comment.user.name }}</div>
+                                        <div class="font-medium">
+                                            {{ comment.user.name }}
+                                        </div>
                                         <div class="text-sm text-gray-500">
                                             {{ $dayjs(comment.created_at).format('DD/MM/YYYY HH:mm') }}
                                         </div>
                                     </div>
-                                    <p class="mt-1">{{ comment.content }}</p>
+                                    <p class="mt-1">
+                                        {{ comment.content }}
+                                    </p>
                                     <div class="mt-2 flex gap-4">
                                         <Button
                                             v-if="$page.props.auth.user"
@@ -161,21 +181,35 @@
                             </div>
 
                             <!-- Nested replies -->
-                            <div v-if="comment.replies && comment.replies.length" class="ml-12 mt-4 space-y-4">
-                                <div v-for="reply in comment.replies" :key="reply.id" class="flex gap-4">
+                            <div
+                                v-if="comment.replies && comment.replies.length"
+                                class="ml-12 mt-4 space-y-4"
+                            >
+                                <div
+                                    v-for="reply in comment.replies"
+                                    :key="reply.id"
+                                    class="flex gap-4"
+                                >
                                     <Avatar
                                         :image="reply.user.profile_photo_url"
                                         shape="circle"
                                     />
                                     <div class="flex-1">
                                         <div class="flex items-center justify-between">
-                                            <div class="font-medium">{{ reply.user.name }}</div>
+                                            <div class="font-medium">
+                                                {{ reply.user.name }}
+                                            </div>
                                             <div class="text-sm text-gray-500">
                                                 {{ $dayjs(reply.created_at).format('DD/MM/YYYY HH:mm') }}
                                             </div>
                                         </div>
-                                        <p class="mt-1">{{ reply.content }}</p>
-                                        <div v-if="$page.props.auth.user && $page.props.auth.user.id === reply.user_id" class="mt-2">
+                                        <p class="mt-1">
+                                            {{ reply.content }}
+                                        </p>
+                                        <div
+                                            v-if="$page.props.auth.user && $page.props.auth.user.id === reply.user_id"
+                                            class="mt-2"
+                                        >
                                             <Button
                                                 severity="danger"
                                                 text
@@ -189,12 +223,15 @@
                             </div>
 
                             <!-- Reply form -->
-                            <div v-if="replyingTo === comment.id" class="ml-12 mt-4">
+                            <div
+                                v-if="replyingTo === comment.id"
+                                class="ml-12 mt-4"
+                            >
                                 <form @submit.prevent="submitReply(comment.id)">
                                     <Textarea
                                         v-model="replyForm.content"
                                         :placeholder="'Répondre à ' + comment.user.name"
-                                        :autoResize="true"
+                                        :auto-resize="true"
                                         rows="2"
                                         class="w-full"
                                     />
@@ -216,7 +253,10 @@
                             </div>
                         </div>
 
-                        <div v-if="!gleaningLocation.comments.length" class="text-center text-gray-500">
+                        <div
+                            v-if="!gleaningLocation.comments.length"
+                            class="text-center text-gray-500"
+                        >
                             Aucun commentaire pour le moment
                         </div>
                     </div>
@@ -227,23 +267,23 @@
 </template>
 
 <script>
-import AppLayout from '@/Layouts/AppLayout.vue'
 import { useForm } from '@inertiajs/vue3'
+import AppLayout from '@/Layouts/AppLayout.vue'
 
 export default {
     components: { AppLayout },
     props: ['gleaningLocation', 'voteCount'],
 
-    data() {
+    data () {
         return {
             form: useForm({
-                content: '',
+                content: ''
             }),
             replyForm: useForm({
                 content: '',
-                parent_id: null,
+                parent_id: null
             }),
-            replyingTo: null,
+            replyingTo: null
         }
     },
 
@@ -262,42 +302,42 @@ export default {
             })
         },
 
-        submitComment() {
+        submitComment () {
             this.form.post(route('locations.comments.store', this.gleaningLocation.id), {
                 preserveScroll: true,
                 onSuccess: () => {
                     this.form.reset()
-                },
+                }
             })
         },
 
-        replyTo(comment) {
+        replyTo (comment) {
             this.replyingTo = comment.id
             this.replyForm.parent_id = comment.id
         },
 
-        cancelReply() {
+        cancelReply () {
             this.replyingTo = null
             this.replyForm.reset()
         },
 
-        submitReply(commentId) {
+        submitReply (commentId) {
             this.replyForm.post(route('locations.comments.store', this.gleaningLocation.id), {
                 preserveScroll: true,
                 onSuccess: () => {
                     this.replyForm.reset()
                     this.replyingTo = null
-                },
+                }
             })
         },
 
-        deleteComment(commentId) {
+        deleteComment (commentId) {
             if (confirm('Êtes-vous sûr de vouloir supprimer ce commentaire ?')) {
                 this.$inertia.delete(route('locations.comments.destroy', [this.gleaningLocation.id, commentId]), {
-                    preserveScroll: true,
+                    preserveScroll: true
                 })
             }
-        },
+        }
     }
 }
 </script>

@@ -11,6 +11,7 @@ class LocationController extends Controller
     public function index()
     {
         $locations = GleaningLocation::query()
+            ->active()
             ->with('gleanable')
             ->when(request()->has('latitude') && request()->has('longitude'), function ($query) {
                 $query

@@ -16,9 +16,15 @@
         @routes
         @vite(['resources/js/app.js'])
         @inertiaHead
+        @voletStyles
+        <style>
+            :root {
+                --volet-primary: #059669;
+            }
+        </style>
     </head>
     <body class="font-sans antialiased">
         @inertia
-
+        @volet
     </body>
 </html>

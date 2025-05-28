@@ -67,13 +67,6 @@ defineProps({
                         >clement@jeglane.be</a>. Je suis toujours à l’écoute et je ferai de mon mieux pour vous répondre
                         rapidement.
                     </p>
-                    <p>
-                        Vous pouvez aussi participer en soumettant vos suggestions ici : <a
-                            href="https://featureflow.tech/ask/cm3ea772c0001b2ubluwceqwi/forit"
-                            target="_blank"
-                            class="text-blue-600 underline"
-                        >https://featureflow.tech/ask/cm3ea772c0001b2ubluwceqwi/forit</a>
-                    </p>
                 </div>
             </div>
             <div class="bg-white py-16 sm:py-24">

@@ -21,10 +21,6 @@ class HomeController extends Controller
 
     public function about()
     {
-        $file = Jetstream::localizedMarkdownPath('about.md');
-
-        return Inertia::render('About', [
-            'about' => Str::markdown(file_get_contents($file)),
-        ]);
+        return Inertia::render('About');
     }
 }

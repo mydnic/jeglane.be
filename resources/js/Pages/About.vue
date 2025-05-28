@@ -1,6 +1,5 @@
 <script setup>
 import { Head } from '@inertiajs/vue3'
-import AuthenticationCardLogo from '@/Components/AuthenticationCardLogo.vue'
 import AppLayout from '@/Layouts/AppLayout.vue'
 
 defineProps({

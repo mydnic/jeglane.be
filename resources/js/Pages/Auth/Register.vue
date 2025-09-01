@@ -119,6 +119,9 @@ const submit = () => {
                         <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 sm:text-2xl">
                             Créer un compte
                         </h1>
+                        <p class="text-gray-600 text-sm">
+                            Créer un compte vous permettra de soumettre des lieux de glanage, de voter et de commenter. Il n'est pas nécessaire de s'inscrire pour consulter les lieux de glanage.
+                        </p>
                         <div class="items-center space-y-3 sm:space-x-4 sm:space-y-0 sm:flex">
                             <a
                                 :href="route('social.redirect', 'google')"

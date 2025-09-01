@@ -66,6 +66,31 @@
             </div>
         </div>
 
+        <div class="bg-white px-6 py-32 lg:px-8 ">
+            <div class="mx-auto max-w-7xl px-6 text-base/7 text-gray-700 ">
+                <p class="text-base/7 font-semibold text-emerald-600 ">
+                    Un site super simple à utiliser
+                </p>
+                <h1 class="mt-2 text-4xl font-semibold tracking-tight text-pretty text-gray-900 sm:text-5xl ">
+                    Comment ça marche ?
+                </h1>
+                <p class="mt-6 text-xl/8">
+                    JeGlane.be recense les lieux de glanage en Belgique. Ouvrez la carte interactive pour découvrir les points de glanage, leur adresse et toutes les informations utiles.
+                </p>
+
+                <div class="mt-10 text-gray-600 space-y-4">
+                    <p>Pour ajouter un lieu sur la carte, vous devez créer un compte. Cela nous permet de vérifier les informations et d’éviter les abus (spam, fausses annonces, etc.).</p>
+                    <p>Un compte est aussi requis pour participer à la communauté : envoyer des photos, commenter, voter, etc.</p>
+                    <p>
+                        Chaque lieu publié reste visible sur la carte pendant <strong>2
+                            mois</strong>.
+                    </p>
+                    <p>La consultation de la carte est libre. Un compte est seulement nécessaire pour proposer des lieux, ajouter des photos, etc.</p>
+                    <p>La plateforme repose entièrement sur les contributions des utilisateurs : la carte affiche uniquement les lieux soumis par la communauté.</p>
+                </div>
+            </div>
+        </div>
+
         <div class="overflow-hidden bg-white py-24 sm:py-32">
             <div class="mx-auto max-w-7xl px-6 lg:px-8">
                 <div class="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 sm:gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-2">

@@ -64,7 +64,7 @@ class LocationController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
+        $data = $request->validate([
             'latitude' => 'required',
             'longitude' => 'required',
             'city' => 'required|string',
@@ -74,8 +74,11 @@ class LocationController extends Controller
             'files' => 'nullable|array',
         ]);
 
+        $data['latitude'] = trim($data['latitude'], ',');
+        $data['longitude'] = trim($data['longitude'], ',');
+
         $location = auth()->user()->gleaningLocations()
-            ->create($request->only('latitude', 'longitude', 'city', 'postal_code', 'description', 'gleanable_id', 'files'));
+            ->create($data);
 
         return redirect()->route('locations.show', $location);
     }

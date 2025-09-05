@@ -4,10 +4,17 @@
             <title>
                 Trouver un lieu de glanage
             </title>
-            <meta
-                name="description"
-                content="Trouvez un lieu de glanage en Belgique"
-            >
+            <link rel="canonical" :href="route('locations.index')">
+            <meta name="description" content="Trouvez un lieu de glanage en Belgique grâce à notre carte interactive et aux contributions de la communauté.">
+            <meta property="og:type" content="website">
+            <meta property="og:title" content="Trouver un lieu de glanage">
+            <meta property="og:description" content="Carte interactive des lieux de glanage en Belgique. Photos, commentaires et votes.">
+            <meta property="og:image" content="/logo.png">
+            <meta property="og:url" :content="route('locations.index')">
+            <meta name="twitter:card" content="summary_large_image">
+            <meta name="twitter:title" content="Trouver un lieu de glanage">
+            <meta name="twitter:description" content="Carte interactive des lieux de glanage en Belgique.">
+            <meta name="twitter:image" content="/logo.png">
         </Head>
         <div class="max-w-7xl mx-auto py-6 space-y-6 px-4 md:px-0">
             <div class="border-b border-gray-200 pb-5">

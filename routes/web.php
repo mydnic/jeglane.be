@@ -5,6 +5,7 @@ use App\Http\Controllers\ChangelogController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LocationController;
+use App\Http\Controllers\SitemapController;
 use App\Http\Controllers\VoteController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -31,6 +32,9 @@ Route::get('locations', [LocationController::class, 'index'])->name('locations.i
 Route::get('locations/{gleaningLocation}', [LocationController::class, 'show'])->name('locations.show');
 
 Route::get('changelog', [ChangelogController::class, 'index'])->name('changelog.index');
+
+// SEO: Sitemap
+Route::get('sitemap.xml', [SitemapController::class, 'index'])->name('sitemap');
 
 // Social Auth
 Route::middleware('guest')->prefix('auth/social/{provider}')->group(function () {

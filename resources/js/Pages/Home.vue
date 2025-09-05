@@ -1,5 +1,18 @@
 <template>
-    <Head title="Trouver des lieux de glanage en Belgique" />
+    <Head>
+        <title>Trouver des lieux de glanage en Belgique</title>
+        <link rel="canonical" :href="route('home')">
+        <meta name="description" content="JeGlane.be recense les lieux de glanage en Belgique. Explorez la carte des champs ouverts, partagez vos découvertes et trouvez des produits frais près de chez vous.">
+        <meta property="og:type" content="website">
+        <meta property="og:title" content="Trouver des lieux de glanage en Belgique">
+        <meta property="og:description" content="Carte interactive, lieux partagés par la communauté, photos et commentaires. Glanez simplement en Belgique.">
+        <meta property="og:image" content="/logo.png">
+        <meta property="og:url" :content="route('home')">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Trouver des lieux de glanage en Belgique">
+        <meta name="twitter:description" content="Carte interactive, lieux de glanage, communauté et photos.">
+        <meta name="twitter:image" content="/logo.png">
+    </Head>
 
     <AppLayout>
         <div class="relative isolate overflow-hidden bg-gradient-to-b from-emerald-100/20 pt-14">

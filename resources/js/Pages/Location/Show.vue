@@ -2,12 +2,23 @@
     <AppLayout class="bg-slate-50">
         <Head>
             <title>
-                Glanage de {{ gleaningLocation.gleanable.name }} - JeGlane.be
+                Glanage de {{ gleaningLocation.gleanable.name }}
             </title>
             <meta
                 name="description"
                 :content="`Glanage de ${gleaningLocation.gleanable.name} à ${gleaningLocation.postal_code} ${gleaningLocation.city}`"
             >
+            <link rel="canonical" :href="route('locations.show', gleaningLocation.id)">
+            <meta property="og:type" content="article">
+            <meta property="og:title" :content="`Glanage de ${gleaningLocation.gleanable.name} - JeGlane.be`">
+            <meta property="og:description" :content="`Glanage de ${gleaningLocation.gleanable.name} à ${gleaningLocation.postal_code} ${gleaningLocation.city}`">
+            <meta property="og:image" :content="(gleaningLocation.files && gleaningLocation.files[0]) ? gleaningLocation.files[0] : '/logo.png'">
+            <meta property="og:url" :content="route('locations.show', gleaningLocation.id)">
+            <meta name="twitter:card" content="summary_large_image">
+            <meta name="twitter:title" :content="`Glanage de ${gleaningLocation.gleanable.name} - JeGlane.be`">
+            <meta name="twitter:description" :content="`Glanage de ${gleaningLocation.gleanable.name} à ${gleaningLocation.postal_code} ${gleaningLocation.city}`">
+            <meta name="twitter:image" :content="(gleaningLocation.files && gleaningLocation.files[0]) ? gleaningLocation.files[0] : '/logo.png'">
+            <script type="application/ld+json" v-html="jsonLd" />
         </Head>
         <div class="px-4 container grid lg:grid-cols-2 gap-6 mx-auto py-8">
             <div class="flex justify-between lg:col-span-2 items-center">
@@ -284,6 +295,33 @@ export default {
                 parent_id: null
             }),
             replyingTo: null
+        }
+    },
+
+    computed: {
+        jsonLd () {
+            const gl = this.gleaningLocation
+            const image = (gl.files && gl.files.length > 0) ? gl.files[0] : '/logo.png'
+            const ld = {
+                '@context': 'https://schema.org',
+                '@type': 'Place',
+                name: `Glanage de ${gl.gleanable.name}`,
+                image: image,
+                url: this.route('locations.show', gl.id),
+                address: {
+                    '@type': 'PostalAddress',
+                    addressLocality: gl.city,
+                    postalCode: gl.postal_code,
+                    addressCountry: 'BE'
+                },
+                geo: {
+                    '@type': 'GeoCoordinates',
+                    latitude: gl.latitude,
+                    longitude: gl.longitude
+                },
+                description: gl.description || `Glanage de ${gl.gleanable.name} à ${gl.postal_code} ${gl.city}`
+            }
+            return JSON.stringify(ld)
         }
     },
 

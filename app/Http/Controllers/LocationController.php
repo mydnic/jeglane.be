@@ -65,13 +65,14 @@ class LocationController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'latitude' => 'required',
-            'longitude' => 'required',
+            'latitude' => 'required|numeric',
+            'longitude' => 'required|numeric',
             'city' => 'required|string',
             'postal_code' => 'required',
             'description' => 'nullable|string',
             'gleanable_id' => 'required|exists:gleanables,id',
             'files' => 'nullable|array',
+            'confirmed' => 'accepted',
         ]);
 
         $data['latitude'] = trim($data['latitude'], ',');

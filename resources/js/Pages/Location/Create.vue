@@ -60,6 +60,10 @@
                                             required
                                             placeholder="Latitude"
                                         />
+                                        <small
+                                            v-if="$page.props.errors && $page.props.errors.latitude"
+                                            class="text-red-600"
+                                        >{{ $page.props.errors.latitude }}</small>
                                     </div>
                                     <div class="flex flex-col gap-1">
                                         <label for="username">Longitude</label>
@@ -70,6 +74,10 @@
                                             required
                                             placeholder="Longitude"
                                         />
+                                        <small
+                                            v-if="$page.props.errors && $page.props.errors.longitude"
+                                            class="text-red-600"
+                                        >{{ $page.props.errors.longitude }}</small>
                                     </div>
                                     <div class="flex flex-col gap-1">
                                         <label for="username">Ville</label>
@@ -80,6 +88,10 @@
                                             required
                                             placeholder="Ville"
                                         />
+                                        <small
+                                            v-if="$page.props.errors && $page.props.errors.city"
+                                            class="text-red-600"
+                                        >{{ $page.props.errors.city }}</small>
                                     </div>
                                     <div class="flex flex-col gap-1">
                                         <label for="username">Code Postal</label>
@@ -90,6 +102,10 @@
                                             required
                                             placeholder="Code Postal"
                                         />
+                                        <small
+                                            v-if="$page.props.errors && $page.props.errors.postal_code"
+                                            class="text-red-600"
+                                        >{{ $page.props.errors.postal_code }}</small>
                                     </div>
                                 </div>
                             </template>
@@ -128,6 +144,10 @@
                                         class="w-full md:w-56"
                                         required
                                     />
+                                    <small
+                                        v-if="$page.props.errors && $page.props.errors.gleanable_id"
+                                        class="text-red-600"
+                                    >{{ $page.props.errors.gleanable_id }}</small>
                                 </div>
 
                                 <div class="flex mt-6 flex-col gap-1">
@@ -242,11 +262,25 @@
                                             v-model="formData.confirmed"
                                             input-id="confirmed"
                                             name="confirmed"
-                                            value="true"
+                                            binary
                                         />
                                         <label for="confirmed">
                                             Je confirme que les informations sont correctes et que je suis autorisé à les soumettre.
                                         </label>
+                                    </div>
+                                    <small
+                                        v-if="$page.props.errors && $page.props.errors.confirmed"
+                                        class="text-red-600"
+                                    >{{ $page.props.errors.confirmed }}</small>
+
+                                    <div
+                                        v-if="$page.props.errors && Object.keys($page.props.errors).length"
+                                        class="mt-6 rounded-md bg-red-50 p-4 text-sm text-red-800"
+                                    >
+                                        <p class="font-semibold">Veuillez corriger les erreurs suivantes :</p>
+                                        <ul class="list-disc pl-5 mt-2 space-y-1">
+                                            <li v-for="(msg, key) in $page.props.errors" :key="key">{{ msg }}</li>
+                                        </ul>
                                     </div>
                                 </div>
                             </template>
@@ -316,12 +350,13 @@ export default {
         submit () {
             this.$inertia.post('/locations', {
                 files: this.formData.fileUrls,
-                gleanable_id: this.formData.gleanable_id.id,
+                gleanable_id: this.formData.gleanable_id?.id ?? this.formData.gleanable_id,
                 description: this.formData.description,
                 latitude: this.formData.latitude,
                 longitude: this.formData.longitude,
                 city: this.formData.city,
-                postal_code: this.formData.postal_code
+                postal_code: this.formData.postal_code,
+                confirmed: this.formData.confirmed
             })
         }
     }

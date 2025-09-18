@@ -53,8 +53,8 @@ export default {
 
     methods: {
         async initializeMap () {
-            // The location of Uluru
-            const position = { lat: 50.5000386, lng: 3.8068281 }
+            // Default position
+            const position = { lat: 50.42279871790141, lng: 4.529179174218756 }
             // Request needed libraries.
             // @ts-ignore
             // eslint-disable-next-line no-undef
@@ -64,16 +64,11 @@ export default {
             map = new Map(document.getElementById('map'), {
                 zoom: 9,
                 center: position,
-                mapId: 'DEMO_MAP_ID',
+                mapId: 'JEGLANE_MAP',
                 controlSize: 33,
 
                 fullscreenControl: false,
                 streetViewControl: false
-            })
-
-            infoWindow = new google.maps.InfoWindow({
-                content: 'sdfsf',
-                ariaLabel: 'Uluru'
             })
 
             geoCoder = new google.maps.Geocoder()

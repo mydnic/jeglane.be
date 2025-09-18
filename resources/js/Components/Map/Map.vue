@@ -71,6 +71,11 @@ export default {
                 streetViewControl: false
             })
 
+            infoWindow = new google.maps.InfoWindow({
+                content: '',
+                ariaLabel: ''
+            })
+
             geoCoder = new google.maps.Geocoder()
 
             this.$emit('center-changed', {

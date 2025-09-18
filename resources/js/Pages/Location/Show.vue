@@ -8,17 +8,46 @@
                 name="description"
                 :content="`Glanage de ${gleaningLocation.gleanable.name} à ${gleaningLocation.postal_code} ${gleaningLocation.city}`"
             >
-            <link rel="canonical" :href="route('locations.show', gleaningLocation.id)">
-            <meta property="og:type" content="article">
-            <meta property="og:title" :content="`Glanage de ${gleaningLocation.gleanable.name} - JeGlane.be`">
-            <meta property="og:description" :content="`Glanage de ${gleaningLocation.gleanable.name} à ${gleaningLocation.postal_code} ${gleaningLocation.city}`">
-            <meta property="og:image" :content="(gleaningLocation.files && gleaningLocation.files[0]) ? gleaningLocation.files[0] : '/logo.png'">
-            <meta property="og:url" :content="route('locations.show', gleaningLocation.id)">
-            <meta name="twitter:card" content="summary_large_image">
-            <meta name="twitter:title" :content="`Glanage de ${gleaningLocation.gleanable.name} - JeGlane.be`">
-            <meta name="twitter:description" :content="`Glanage de ${gleaningLocation.gleanable.name} à ${gleaningLocation.postal_code} ${gleaningLocation.city}`">
-            <meta name="twitter:image" :content="(gleaningLocation.files && gleaningLocation.files[0]) ? gleaningLocation.files[0] : '/logo.png'">
-            <script type="application/ld+json" v-html="jsonLd" />
+            <link
+                rel="canonical"
+                :href="route('locations.show', gleaningLocation.id)"
+            >
+            <meta
+                property="og:type"
+                content="article"
+            >
+            <meta
+                property="og:title"
+                :content="`Glanage de ${gleaningLocation.gleanable.name} - JeGlane.be`"
+            >
+            <meta
+                property="og:description"
+                :content="`Glanage de ${gleaningLocation.gleanable.name} à ${gleaningLocation.postal_code} ${gleaningLocation.city}`"
+            >
+            <meta
+                property="og:image"
+                :content="(gleaningLocation.files && gleaningLocation.files[0]) ? gleaningLocation.files[0] : '/logo.png'"
+            >
+            <meta
+                property="og:url"
+                :content="route('locations.show', gleaningLocation.id)"
+            >
+            <meta
+                name="twitter:card"
+                content="summary_large_image"
+            >
+            <meta
+                name="twitter:title"
+                :content="`Glanage de ${gleaningLocation.gleanable.name} - JeGlane.be`"
+            >
+            <meta
+                name="twitter:description"
+                :content="`Glanage de ${gleaningLocation.gleanable.name} à ${gleaningLocation.postal_code} ${gleaningLocation.city}`"
+            >
+            <meta
+                name="twitter:image"
+                :content="(gleaningLocation.files && gleaningLocation.files[0]) ? gleaningLocation.files[0] : '/logo.png'"
+            >
         </Head>
         <div class="px-4 container grid lg:grid-cols-2 gap-6 mx-auto py-8">
             <div class="flex justify-between lg:col-span-2 items-center">
@@ -305,21 +334,21 @@ export default {
             const ld = {
                 '@context': 'https://schema.org',
                 '@type': 'Place',
-                name: `Glanage de ${gl.gleanable.name}`,
-                image: image,
-                url: this.route('locations.show', gl.id),
-                address: {
+                'name': `Glanage de ${gl.gleanable.name}`,
+                'image': image,
+                'url': this.route('locations.show', gl.id),
+                'address': {
                     '@type': 'PostalAddress',
-                    addressLocality: gl.city,
-                    postalCode: gl.postal_code,
-                    addressCountry: 'BE'
+                    'addressLocality': gl.city,
+                    'postalCode': gl.postal_code,
+                    'addressCountry': 'BE'
                 },
-                geo: {
+                'geo': {
                     '@type': 'GeoCoordinates',
-                    latitude: gl.latitude,
-                    longitude: gl.longitude
+                    'latitude': gl.latitude,
+                    'longitude': gl.longitude
                 },
-                description: gl.description || `Glanage de ${gl.gleanable.name} à ${gl.postal_code} ${gl.city}`
+                'description': gl.description || `Glanage de ${gl.gleanable.name} à ${gl.postal_code} ${gl.city}`
             }
             return JSON.stringify(ld)
         }

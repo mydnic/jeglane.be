@@ -25,6 +25,15 @@ class LocationController extends Controller
                         request('distance') ?? 70000, // 70 milles metres
                     ]);
             })
+            ->when(request()->filled('categories'), function ($query) {
+                $categories = request('categories');
+                if (!is_array($categories)) {
+                    $categories = array_filter(explode(',', (string) $categories));
+                }
+                if (!empty($categories)) {
+                    $query->whereIn('gleanable_id', $categories);
+                }
+            })
             ->when(request()->has('postal_code'), function ($query) {
                 $query->where('postal_code', request('postal_code'));
             })
@@ -34,8 +43,12 @@ class LocationController extends Controller
             ->orderBy('postal_code')
             ->get();
 
+        $gleanables = Gleanable::orderBy('name')->get();
+
         return inertia('Location/Index', [
             'locations' => $locations,
+            'gleanables' => $gleanables,
+            'filters' => request()->only(['categories', 'latitude', 'longitude', 'distance', 'postal_code']),
         ]);
     }
 

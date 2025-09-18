@@ -56,18 +56,38 @@
                 </h3>
             </div>
 
-            <div>
+            <div class="space-y-6">
                 <div class="flex md:flex-row flex-col md:h-[80vh] -mx-4">
                     <div class="order-last md:order-first h-full max-h-full md:w-1/2 xl:w-1/3 overflow-auto px-4">
                         <div class="flex-col space-y-4">
+                            <div class="flex flex-col md:flex-row gap-3 md:items-center">
+                                <div class="grow max-w-xl">
+                                    <MultiSelect
+                                        v-model="selectedCategories"
+                                        :options="gleanables"
+                                        option-label="name"
+                                        option-value="id"
+                                        display="comma"
+                                        placeholder="Filtrer par catégorie"
+                                        class="w-full"
+                                        :max-selected-labels="3"
+                                        @change="onCategoriesChanged"
+                                    />
+                                </div>
+                                <Button
+                                    v-if="selectedCategories.length"
+                                    label="Réinitialiser"
+                                    size="small"
+                                    severity="secondary"
+                                    icon="pi pi-filter-slash"
+                                    @click="clearCategories"
+                                />
+                            </div>
                             <div
                                 v-for="(item, index) in locations"
                                 :key="index"
                             >
-                                <Card
-                                    class="py-3"
-                                    :class="{ 'border-t border-surface-200 dark:border-surface-700': index !== 0 }"
-                                >
+                                <Card>
                                     <template #content>
                                         <div>
                                             <div class="text-lg font-medium">
@@ -129,7 +149,7 @@ import AppLayout from '@/Layouts/AppLayout.vue'
 
 export default {
     components: { AppLayout },
-    props: ['locations'],
+    props: ['locations', 'gleanables', 'filters'],
 
     data () {
         return {
@@ -137,7 +157,8 @@ export default {
                 latitude: 50.42279871790141,
                 longitude: 4.529179174218756
             },
-            zoom: 9
+            zoom: 9,
+            selectedCategories: []
         }
     },
 
@@ -152,6 +173,13 @@ export default {
     },
 
     methods: {
+        onCategoriesChanged () {
+            this.getLocations()
+        },
+        clearCategories () {
+            this.selectedCategories = []
+            this.getLocations()
+        },
         onCenterChanged (center) {
             if (center.latitude === this.center.latitude && center.longitude === this.center.longitude) {
                 return
@@ -168,12 +196,24 @@ export default {
             this.$inertia.get('/locations', {
                 latitude: this.center.latitude,
                 longitude: this.center.longitude,
-                distance: this.maxMeters
+                distance: this.maxMeters,
+                categories: this.selectedCategories
             }, {
                 preserveState: true,
-                preserveScroll: true
+                preserveScroll: true,
+                replace: true
             })
         }, 500)
+    },
+
+    mounted () {
+        // Initialize categories from query string (array or comma-separated string)
+        const incoming = this.filters?.categories
+        if (Array.isArray(incoming)) {
+            this.selectedCategories = incoming.map(v => Number(v))
+        } else if (typeof incoming === 'string' && incoming.length) {
+            this.selectedCategories = incoming.split(',').map(v => Number(v)).filter(v => !Number.isNaN(v))
+        }
     }
 }
 </script>

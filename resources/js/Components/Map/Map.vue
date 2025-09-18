@@ -36,7 +36,7 @@ export default {
     watch: {
         markers: {
             handler (newValue) {
-                this.addMarkers(newValue)
+                this.addMarkers()
             },
             deep: true
         }
@@ -205,8 +205,8 @@ export default {
                 }, function (results, status) {
                     if (status === google.maps.GeocoderStatus.OK) {
                         if (results) {
-                            const city = results[0].address_components.find(component => component.types.includes('locality')).long_name
-                            const postalCode = results[0].address_components.find(component => component.types.includes('postal_code')).long_name
+                            const city = results[0].address_components.find(component => component.types.includes('locality'))?.long_name
+                            const postalCode = results[0].address_components.find(component => component.types.includes('postal_code'))?.long_name
 
                             that.$emit('current-position', {
                                 latitude: event.latLng.lat(),
@@ -228,7 +228,15 @@ export default {
         },
 
         async addMarkers  () {
-            // this.clearOverlays()
+            // Remove existing markers before re-drawing
+            this.clearOverlays()
+
+            if (!this.markers || this.markers.length === 0) {
+                if (infoWindow) {
+                    infoWindow.close()
+                }
+                return
+            }
             // eslint-disable-next-line no-undef
             const { AdvancedMarkerElement } = await google.maps.importLibrary('marker')
             this.markers.map((marker) => {

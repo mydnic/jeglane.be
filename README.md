@@ -63,6 +63,10 @@ php artisan migrate
 php artisan serve
 ```
 
+## Presse
+
+- https://www.jecuisinelocal.be/glaner-oui-mais-pas-nimporte-comment/
+
 ## Contribution
 Les contributions sont les bienvenues ! Veuillez soumettre une pull request ou ouvrir une issue pour discuter des changements que vous souhaitez apporter.  
 

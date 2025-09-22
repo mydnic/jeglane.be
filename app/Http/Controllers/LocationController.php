@@ -10,19 +10,41 @@ class LocationController extends Controller
 {
     public function index()
     {
+        // Sanitize and normalize incoming geospatial parameters
+        $lat = request()->has('latitude') ? (float) request('latitude') : null;
+        $lng = request()->has('longitude') ? (float) request('longitude') : null;
+        $distance = request()->has('distance') ? (float) request('distance') : null;
+
+        // Normalize longitude to (-180, 180]
+        if (!is_null($lng)) {
+            $lng = fmod($lng + 180.0, 360.0);
+            if ($lng < 0) {
+                $lng += 360.0;
+            }
+            $lng -= 180.0;
+        }
+
+        // Clamp latitude to [-90, 90]
+        if (!is_null($lat)) {
+            $lat = max(-90.0, min(90.0, $lat));
+        }
+
+        // Ensure distance is a non-negative number, default to 70km if not provided
+        $distance = !is_null($distance) ? max(0.0, $distance) : 70000.0;
+
         $locations = GleaningLocation::query()
             ->active()
             ->with('gleanable')
-            ->when(request()->has('latitude') && request()->has('longitude'), function ($query) {
+            ->when(!is_null($lat) && !is_null($lng), function ($query) use ($lat, $lng, $distance) {
                 $query
                     ->selectRaw('*, ST_Distance_Sphere(point(longitude, latitude), point(?, ?)) as distance', [
-                        request('longitude'),
-                        request('latitude'),
+                        $lng,
+                        $lat,
                     ])
                     ->whereRaw('ST_Distance_Sphere(point(longitude, latitude),point(?, ?)) < ?', [
-                        request('longitude'),
-                        request('latitude'),
-                        request('distance') ?? 70000, // 70 milles metres
+                        $lng,
+                        $lat,
+                        $distance,
                     ]);
             })
             ->when(request()->filled('categories'), function ($query) {
@@ -48,7 +70,15 @@ class LocationController extends Controller
         return inertia('Location/Index', [
             'locations' => $locations,
             'gleanables' => $gleanables,
-            'filters' => request()->only(['categories', 'latitude', 'longitude', 'distance', 'postal_code']),
+            // Return sanitized filters so the UI reflects the used values
+            'filters' => array_merge(
+                request()->only(['categories', 'postal_code']),
+                [
+                    'latitude' => $lat,
+                    'longitude' => $lng,
+                    'distance' => $distance,
+                ]
+            ),
         ]);
     }
 

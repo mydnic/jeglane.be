@@ -173,6 +173,14 @@ export default {
     },
 
     methods: {
+        normalizeLongitude (lng) {
+            const x = ((Number(lng) + 180) % 360 + 360) % 360 - 180
+            return x
+        },
+        clampLatitude (lat) {
+            const x = Math.max(-90, Math.min(90, Number(lat)))
+            return x
+        },
         onCategoriesChanged () {
             this.getLocations()
         },
@@ -184,7 +192,10 @@ export default {
             if (center.latitude === this.center.latitude && center.longitude === this.center.longitude) {
                 return
             }
-            this.center = center
+            this.center = {
+                latitude: this.clampLatitude(center.latitude),
+                longitude: this.normalizeLongitude(center.longitude)
+            }
             this.getLocations()
         },
         onZoomChanged (zoom) {
@@ -193,9 +204,11 @@ export default {
         },
 
         getLocations: debounce(function () {
+            const latitude = this.clampLatitude(this.center.latitude)
+            const longitude = this.normalizeLongitude(this.center.longitude)
             this.$inertia.get('/locations', {
-                latitude: this.center.latitude,
-                longitude: this.center.longitude,
+                latitude,
+                longitude,
                 distance: this.maxMeters,
                 categories: this.selectedCategories
             }, {

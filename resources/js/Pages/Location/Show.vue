@@ -2,7 +2,8 @@
     <AppLayout class="bg-slate-50">
         <Head>
             <title>
-                Glanage de {{ gleaningLocation.gleanable.name }}
+                Glanage de {{ gleaningLocation.gleanable.name }} à {{ gleaningLocation.postal_code }}
+                {{ gleaningLocation.city }}
             </title>
             <meta
                 name="description"

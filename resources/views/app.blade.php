@@ -47,5 +47,11 @@
     <body class="font-sans antialiased">
         @inertia
         @volet
+
+        <script
+            src="https://rybbit.dricle.be/api/script.js"
+            data-site-id="4656fbe913f7"
+            defer
+        ></script>
     </body>
 </html>

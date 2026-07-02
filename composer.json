@@ -5,7 +5,7 @@
     "keywords": ["laravel", "framework"],
     "license": "MIT",
     "require": {
-        "php": "^8.5",
+        "php": "^8.4",
         "grkamil/laravel-telegram-logging": "^1.13",
         "inertiajs/inertia-laravel": "^v2.0.19",
         "laravel/framework": "^v12.50.0",

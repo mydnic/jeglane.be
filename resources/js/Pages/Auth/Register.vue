@@ -51,7 +51,7 @@ const submit = () => {
                             </div>
                             <div class="relative pl-9">
                                 <dt class="inline font-semibold text-gray-900">
-                                    <i class="pi pi-ban absolute left-1 top-1 h-5 w-5 text-emerald-600" />
+                                    <UIcon name="i-lucide-ban" class="absolute left-1 top-1 h-5 w-5 text-emerald-600" />
                                 </dt>
                                 <dd class="inline">
                                     Le glanage ne peut en aucun cas se faire sur des parcelles clôturées
@@ -114,7 +114,7 @@ const submit = () => {
                         Jeglane.be
                     </a>
                 </div>
-                <div class="w-full mx-auto bg-white rounded-lg shadow md:mt-0 sm:max-w-lg xl:p-0 lg:col-span-7 xl:col-span-6">
+                <div class="w-full mx-auto bg-white rounded-lg shadow-sm md:mt-0 sm:max-w-lg xl:p-0 lg:col-span-7 xl:col-span-6">
                     <div class="p-6 space-y-4 lg:space-y-6 sm:p-8">
                         <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 sm:text-2xl">
                             Créer un compte
@@ -125,7 +125,7 @@ const submit = () => {
                         <div class="items-center space-y-3 sm:space-x-4 sm:space-y-0 sm:flex">
                             <a
                                 :href="route('social.redirect', 'google')"
-                                class="w-full inline-flex items-center justify-center py-2.5 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-gray-900 focus:z-10 focus:ring-4 focus:ring-gray-200"
+                                class="w-full inline-flex items-center justify-center py-2.5 px-5 text-sm font-medium text-gray-900 focus:outline-hidden bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-gray-900 focus:z-10 focus:ring-4 focus:ring-gray-200"
                             >
                                 <svg
                                     class="w-5 h-5 mr-2"
@@ -156,7 +156,7 @@ const submit = () => {
                             </a>
                             <a
                                 :href="route('social.redirect', 'facebook')"
-                                class="w-full inline-flex items-center justify-center py-2.5 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-gray-900 focus:z-10 focus:ring-4 focus:ring-gray-200"
+                                class="w-full inline-flex items-center justify-center py-2.5 px-5 text-sm font-medium text-gray-900 focus:outline-hidden bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-gray-900 focus:z-10 focus:ring-4 focus:ring-gray-200"
                             >
                                 <svg
                                     class="w-5 h-5 mr-2 text-[#1877F2]"
@@ -268,11 +268,11 @@ const submit = () => {
                                             J'accepte les <a
                                                 target="_blank"
                                                 :href="route('terms.show')"
-                                                class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                                class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-hidden focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                                             >conditions d'utilisation</a> et la <a
                                                 target="_blank"
                                                 :href="route('policy.show')"
-                                                class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                                class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-hidden focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                                             >politique sur la vie privée</a>
                                         </div>
                                     </div>
@@ -282,13 +282,13 @@ const submit = () => {
                                     />
                                 </InputLabel>
                             </div>
-                            <Button
+                            <UButton
                                 :class="{ 'opacity-25': form.processing }"
                                 :disabled="form.processing"
                                 type="submit"
                             >
                                 Créer mon compte
-                            </Button>
+                            </UButton>
 
                             <p class="text-sm font-light text-gray-500">
                                 Vous avez déjà un compte? <Link

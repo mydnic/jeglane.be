@@ -16,302 +16,267 @@
                 </h3>
             </div>
 
-            <Stepper
-                value="1"
+            <UStepper
+                ref="stepper"
+                v-model="step"
+                :items="steps"
                 linear
             >
-                <StepList>
-                    <Step value="1">
-                        Lieu
-                    </Step>
-                    <Step value="2">
-                        Description
-                    </Step>
-                    <Step value="3">
-                        Photos
-                    </Step>
-                    <Step value="4">
-                        Validation
-                    </Step>
-                </StepList>
-                <StepPanels>
-                    <StepPanel
-                        v-slot="{ activateCallback }"
-                        value="1"
-                    >
-                        <Card>
-                            <template #title>
-                                Choisissez l'emplacement
-                            </template>
-                            <template #content>
-                                <Map
-                                    class="h-[50vh]"
-                                    can-set-marker
-                                    @current-position="onPositionChange"
-                                />
+                <template #place>
+                    <UCard>
+                        <template #title>
+                            Choisissez l'emplacement
+                        </template>
 
-                                <div class="space-y-3 mt-6">
-                                    <div class="flex flex-col gap-1">
-                                        <label for="username">Latitude</label>
-                                        <InputText
-                                            v-model="formData.latitude"
-                                            type="text"
-                                            size="small"
-                                            required
-                                            placeholder="Latitude"
-                                        />
-                                        <small
-                                            v-if="$page.props.errors && $page.props.errors.latitude"
-                                            class="text-red-600"
-                                        >{{ $page.props.errors.latitude }}</small>
-                                    </div>
-                                    <div class="flex flex-col gap-1">
-                                        <label for="username">Longitude</label>
-                                        <InputText
-                                            v-model="formData.longitude"
-                                            type="text"
-                                            size="small"
-                                            required
-                                            placeholder="Longitude"
-                                        />
-                                        <small
-                                            v-if="$page.props.errors && $page.props.errors.longitude"
-                                            class="text-red-600"
-                                        >{{ $page.props.errors.longitude }}</small>
-                                    </div>
-                                    <div class="flex flex-col gap-1">
-                                        <label for="username">Ville</label>
-                                        <InputText
-                                            v-model="formData.city"
-                                            type="text"
-                                            size="small"
-                                            required
-                                            placeholder="Ville"
-                                        />
-                                        <small
-                                            v-if="$page.props.errors && $page.props.errors.city"
-                                            class="text-red-600"
-                                        >{{ $page.props.errors.city }}</small>
-                                    </div>
-                                    <div class="flex flex-col gap-1">
-                                        <label for="username">Code Postal</label>
-                                        <InputText
-                                            v-model="formData.postal_code"
-                                            type="text"
-                                            size="small"
-                                            required
-                                            placeholder="Code Postal"
-                                        />
-                                        <small
-                                            v-if="$page.props.errors && $page.props.errors.postal_code"
-                                            class="text-red-600"
-                                        >{{ $page.props.errors.postal_code }}</small>
-                                    </div>
-                                </div>
-                            </template>
+                        <template #default>
+                            <Map
+                                class="h-[50vh]"
+                                can-set-marker
+                                @current-position="onPositionChange"
+                            />
 
-                            <template #footer>
-                                <div class="flex gap-4 mt-1">
-                                    <Button
-                                        label="Suivant"
-                                        class="w-full"
-                                        icon="pi pi-arrow-right"
-                                        :disabled="!formData.latitude || !formData.longitude"
-                                        @click="activateCallback('2')"
-                                    />
-                                </div>
-                            </template>
-                        </Card>
-                    </StepPanel>
-
-                    <StepPanel
-                        v-slot="{ activateCallback }"
-                        value="2"
-                    >
-                        <Card>
-                            <template #title>
-                                Donnez quelques détails
-                            </template>
-                            <template #content>
-                                <div class="flex mt-6 flex-col gap-1">
-                                    <label for="username">Que peut-on y trouver ?</label>
-                                    <Select
-                                        v-model="formData.gleanable_id"
-                                        :options="gleanables"
-                                        filter
-                                        option-label="name"
-                                        placeholder="Choisir une option"
-                                        class="w-full md:w-56"
+                            <div class="space-y-3 mt-6">
+                                <UFormField
+                                    label="Latitude"
+                                    :error="$page.props.errors?.latitude"
+                                >
+                                    <UInput
+                                        v-model="formData.latitude"
+                                        type="text"
+                                        size="sm"
                                         required
+                                        placeholder="Latitude"
                                     />
-                                    <small
-                                        v-if="$page.props.errors && $page.props.errors.gleanable_id"
-                                        class="text-red-600"
-                                    >{{ $page.props.errors.gleanable_id }}</small>
-                                </div>
-
-                                <div class="flex mt-6 flex-col gap-1">
-                                    <label for="username">Un petit commentaire pour les autres glaneurs ?</label>
-                                    <Textarea
-                                        v-model="formData.description"
-                                        placeholder="Décrivez le lieu, comment y accéder, ce que l'on peut y trouver, etc."
-                                        class="w-full"
+                                </UFormField>
+                                <UFormField
+                                    label="Longitude"
+                                    :error="$page.props.errors?.longitude"
+                                >
+                                    <UInput
+                                        v-model="formData.longitude"
+                                        type="text"
+                                        size="sm"
+                                        required
+                                        placeholder="Longitude"
                                     />
-                                </div>
-                            </template>
-
-                            <template #footer>
-                                <div class="flex gap-4 mt-5">
-                                    <Button
-                                        label="Précédent"
-                                        class="w-full"
-                                        severity="secondary"
-                                        icon="pi pi-arrow-left"
-                                        @click="activateCallback('1')"
+                                </UFormField>
+                                <UFormField
+                                    label="Ville"
+                                    :error="$page.props.errors?.city"
+                                >
+                                    <UInput
+                                        v-model="formData.city"
+                                        type="text"
+                                        size="sm"
+                                        required
+                                        placeholder="Ville"
                                     />
-                                    <Button
-                                        label="Suivant"
-                                        class="w-full"
-                                        icon="pi pi-arrow-right"
-                                        icon-pos="right"
-                                        :disabled="!formData.gleanable_id"
-                                        @click="activateCallback('3')"
+                                </UFormField>
+                                <UFormField
+                                    label="Code Postal"
+                                    :error="$page.props.errors?.postal_code"
+                                >
+                                    <UInput
+                                        v-model="formData.postal_code"
+                                        type="text"
+                                        size="sm"
+                                        required
+                                        placeholder="Code Postal"
                                     />
-                                </div>
-                            </template>
-                        </Card>
-                    </StepPanel>
+                                </UFormField>
+                            </div>
+                        </template>
 
-                    <StepPanel
-                        v-slot="{ activateCallback }"
-                        value="3"
-                    >
-                        <Card>
-                            <template #title>
-                                Des photos ?
-                            </template>
-                            <template #content>
-                                <div class="py-6">
-                                    <FileUpload
-                                        mode="basic"
-                                        name="files[]"
-                                        url="/api/upload"
-                                        accept="image/*"
-                                        :max-file-size="1000000"
-                                        multiple
-                                        :auto="true"
-                                        choose-label="Choisir des photos"
-                                        @upload="onUpload"
-                                    />
+                        <template #footer>
+                            <div class="flex gap-4">
+                                <UButton
+                                    label="Suivant"
+                                    block
+                                    icon="i-lucide-arrow-right"
+                                    :disabled="!formData.latitude || !formData.longitude"
+                                    @click="$refs.stepper.next()"
+                                />
+                            </div>
+                        </template>
+                    </UCard>
+                </template>
 
-                                    <div class="grid mt-6 grid-cols-2 gap-4 md:grid-cols-3">
-                                        <div
-                                            v-for="image in formData.fileUrls"
-                                            :key="image"
-                                            class="relative flex-col flex items-center"
-                                        >
-                                            <img
-                                                :src="image"
-                                                alt="decoration"
-                                            >
-                                            <Button
-                                                icon="pi pi-times"
-                                                severity="danger"
-                                                text
-                                                rounded
-                                                @click="formData.fileUrls = formData.fileUrls.filter((url) => url !== image)"
-                                            />
-                                        </div>
-                                    </div>
-                                </div>
-                            </template>
+                <template #details>
+                    <UCard>
+                        <template #title>
+                            Donnez quelques détails
+                        </template>
 
-                            <template #footer>
-                                <div class="flex gap-4 mt-5">
-                                    <Button
-                                        label="Précédent"
-                                        class="w-full"
-                                        severity="secondary"
-                                        icon="pi pi-arrow-left"
-                                        @click="activateCallback('2')"
-                                    />
-                                    <Button
-                                        label="Suivant"
-                                        class="w-full"
-                                        icon="pi pi-arrow-right"
-                                        icon-pos="right"
-                                        @click="activateCallback('4')"
-                                    />
-                                </div>
-                            </template>
-                        </Card>
-                    </StepPanel>
+                        <template #default>
+                            <UFormField
+                                label="Que peut-on y trouver ?"
+                                :error="$page.props.errors?.gleanable_id"
+                            >
+                                <USelectMenu
+                                    v-model="formData.gleanable_id"
+                                    :items="gleanables"
+                                    label-key="name"
+                                    value-key="id"
+                                    placeholder="Choisir une option"
+                                    class="w-full md:w-56"
+                                    required
+                                />
+                            </UFormField>
 
-                    <StepPanel
-                        v-slot="{ activateCallback }"
-                        value="4"
-                    >
-                        <Card>
-                            <template #title>
-                                Validation
-                            </template>
-                            <template #content>
-                                <div class="py-6">
-                                    <div class="flex items-center gap-2">
-                                        <Checkbox
-                                            v-model="formData.confirmed"
-                                            input-id="confirmed"
-                                            name="confirmed"
-                                            binary
-                                        />
-                                        <label for="confirmed">
-                                            Je confirme que les informations sont correctes et que je suis autorisé à les soumettre.
-                                        </label>
-                                    </div>
-                                    <small
-                                        v-if="$page.props.errors && $page.props.errors.confirmed"
-                                        class="text-red-600"
-                                    >{{ $page.props.errors.confirmed }}</small>
+                            <UFormField
+                                class="mt-6"
+                                label="Un petit commentaire pour les autres glaneurs ?"
+                            >
+                                <UTextarea
+                                    v-model="formData.description"
+                                    placeholder="Décrivez le lieu, comment y accéder, ce que l'on peut y trouver, etc."
+                                    class="w-full"
+                                />
+                            </UFormField>
+                        </template>
 
-                                    <div
-                                        v-if="$page.props.errors && Object.keys($page.props.errors).length"
-                                        class="mt-6 rounded-md bg-red-50 p-4 text-sm text-red-800"
+                        <template #footer>
+                            <div class="flex gap-4">
+                                <UButton
+                                    label="Précédent"
+                                    block
+                                    color="neutral"
+                                    variant="outline"
+                                    icon="i-lucide-arrow-left"
+                                    @click="$refs.stepper.prev()"
+                                />
+                                <UButton
+                                    label="Suivant"
+                                    block
+                                    trailing-icon="i-lucide-arrow-right"
+                                    :disabled="!formData.gleanable_id"
+                                    @click="$refs.stepper.next()"
+                                />
+                            </div>
+                        </template>
+                    </UCard>
+                </template>
+
+                <template #photos>
+                    <UCard>
+                        <template #title>
+                            Des photos ?
+                        </template>
+
+                        <template #default>
+                            <UFileUpload
+                                v-model="files"
+                                accept="image/*"
+                                multiple
+                                :preview="false"
+                                :disabled="uploading"
+                                label="Choisir des photos"
+                                @update:model-value="onFilesSelected"
+                            />
+
+                            <div class="grid mt-6 grid-cols-2 gap-4 md:grid-cols-3">
+                                <div
+                                    v-for="image in formData.fileUrls"
+                                    :key="image"
+                                    class="relative flex-col flex items-center"
+                                >
+                                    <img
+                                        :src="image"
+                                        alt="decoration"
                                     >
-                                        <p class="font-semibold">Veuillez corriger les erreurs suivantes :</p>
-                                        <ul class="list-disc pl-5 mt-2 space-y-1">
-                                            <li v-for="(msg, key) in $page.props.errors" :key="key">{{ msg }}</li>
-                                        </ul>
-                                    </div>
+                                    <UButton
+                                        icon="i-lucide-x"
+                                        color="error"
+                                        variant="ghost"
+                                        @click="formData.fileUrls = formData.fileUrls.filter((url) => url !== image)"
+                                    />
                                 </div>
-                            </template>
+                            </div>
+                        </template>
 
-                            <template #footer>
-                                <div class="flex gap-4 mt-5">
-                                    <Button
-                                        label="Précédent"
-                                        class="w-full"
-                                        severity="secondary"
-                                        icon="pi pi-arrow-left"
-                                        @click="activateCallback('3')"
-                                    />
-                                    <Button
-                                        label="Soumettre"
-                                        class="w-full"
-                                        icon="pi pi-check"
-                                        icon-pos="right"
-                                        @click="submit"
-                                    />
-                                </div>
-                            </template>
-                        </Card>
-                    </StepPanel>
-                </StepPanels>
-            </Stepper>
+                        <template #footer>
+                            <div class="flex gap-4">
+                                <UButton
+                                    label="Précédent"
+                                    block
+                                    color="neutral"
+                                    variant="outline"
+                                    icon="i-lucide-arrow-left"
+                                    @click="$refs.stepper.prev()"
+                                />
+                                <UButton
+                                    label="Suivant"
+                                    block
+                                    trailing-icon="i-lucide-arrow-right"
+                                    @click="$refs.stepper.next()"
+                                />
+                            </div>
+                        </template>
+                    </UCard>
+                </template>
+
+                <template #validation>
+                    <UCard>
+                        <template #title>
+                            Validation
+                        </template>
+
+                        <template #default>
+                            <UCheckbox
+                                v-model="formData.confirmed"
+                                name="confirmed"
+                                label="Je confirme que les informations sont correctes et que je suis autorisé à les soumettre."
+                            />
+                            <small
+                                v-if="$page.props.errors && $page.props.errors.confirmed"
+                                class="text-red-600"
+                            >{{ $page.props.errors.confirmed }}</small>
+
+                            <div
+                                v-if="$page.props.errors && Object.keys($page.props.errors).length"
+                                class="mt-6 rounded-md bg-red-50 p-4 text-sm text-red-800"
+                            >
+                                <p class="font-semibold">
+                                    Veuillez corriger les erreurs suivantes :
+                                </p>
+                                <ul class="list-disc pl-5 mt-2 space-y-1">
+                                    <li
+                                        v-for="(msg, key) in $page.props.errors"
+                                        :key="key"
+                                    >
+                                        {{ msg }}
+                                    </li>
+                                </ul>
+                            </div>
+                        </template>
+
+                        <template #footer>
+                            <div class="flex gap-4">
+                                <UButton
+                                    label="Précédent"
+                                    block
+                                    color="neutral"
+                                    variant="outline"
+                                    icon="i-lucide-arrow-left"
+                                    @click="$refs.stepper.prev()"
+                                />
+                                <UButton
+                                    label="Soumettre"
+                                    block
+                                    trailing-icon="i-lucide-check"
+                                    @click="submit"
+                                />
+                            </div>
+                        </template>
+                    </UCard>
+                </template>
+            </UStepper>
         </div>
     </AppLayout>
 </template>
 
 <script>
+import axios from 'axios'
 import AppLayout from '@/Layouts/AppLayout.vue'
 
 export default {
@@ -320,16 +285,25 @@ export default {
 
     data () {
         return {
+            step: 'place',
+            steps: [
+                { value: 'place', title: 'Lieu', slot: 'place' },
+                { value: 'details', title: 'Description', slot: 'details' },
+                { value: 'photos', title: 'Photos', slot: 'photos' },
+                { value: 'validation', title: 'Validation', slot: 'validation' }
+            ],
             formData: {
                 latitude: null,
                 longitude: null,
                 city: null,
                 postal_code: null,
+                gleanable_id: null,
                 description: null,
                 confirmed: false,
                 fileUrls: []
             },
-            files: []
+            files: [],
+            uploading: false
         }
     },
 
@@ -341,16 +315,30 @@ export default {
             this.formData.postal_code = position.postalCode
         },
 
-        onUpload (event) {
-            JSON.parse(event.xhr.response).files.forEach((file) => {
-                this.formData.fileUrls.push(file)
-            })
+        // Nuxt UI's file upload only picks files, so the upload PrimeVue's
+        // FileUpload used to perform on its own is done here.
+        async onFilesSelected (files) {
+            if (!files || !files.length) {
+                return
+            }
+
+            const body = new FormData()
+            files.forEach(file => body.append('files[]', file))
+
+            this.uploading = true
+            try {
+                const { data } = await axios.post('/api/upload', body)
+                data.files.forEach(file => this.formData.fileUrls.push(file))
+            } finally {
+                this.uploading = false
+                this.files = []
+            }
         },
 
         submit () {
             this.$inertia.post('/locations', {
                 files: this.formData.fileUrls,
-                gleanable_id: this.formData.gleanable_id?.id ?? this.formData.gleanable_id,
+                gleanable_id: this.formData.gleanable_id,
                 description: this.formData.description,
                 latitude: this.formData.latitude,
                 longitude: this.formData.longitude,

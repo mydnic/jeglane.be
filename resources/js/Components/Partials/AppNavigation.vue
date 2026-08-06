@@ -1,76 +1,52 @@
 <template>
-    <Menubar
-        class="fixed w-full z-20"
-        :model="items"
-    >
-        <template #start>
-            <img
-                src="/logo.png"
-                alt="Logo Jeglane.be"
-                class="h-[40px] rounded-full"
-            >
-        </template>
-        <template #end>
-            <div
-                v-if="$page.props.auth.user"
-                class="flex items-center gap-2"
-            >
-                <Button
+    <div class="fixed w-full z-20 flex items-center gap-4 px-4 py-2 bg-default border-b border-default">
+        <img
+            src="/logo.png"
+            alt="Logo Jeglane.be"
+            class="h-[40px] rounded-full"
+        >
+
+        <UNavigationMenu
+            :items="items"
+            class="grow"
+        />
+
+        <div
+            v-if="$page.props.auth.user"
+            class="flex items-center gap-2"
+        >
+            <UDropdownMenu :items="userItems">
+                <UButton
                     type="button"
-                    text
-                    severity="secondary"
-                    aria-haspopup="true"
-                    aria-controls="overlay_menu"
-                    @click="toggle"
+                    variant="ghost"
+                    color="neutral"
                 >
-                    <Avatar
-                        :image="$page.props.auth.user.profile_photo_url"
-                        shape="circle"
+                    <UAvatar
+                        :src="$page.props.auth.user.profile_photo_url"
+                        size="xs"
                     />
                     {{ $page.props.auth.user.name }}
-                </Button>
+                </UButton>
+            </UDropdownMenu>
+        </div>
 
-                <Menu
-                    id="overlay_menu"
-                    ref="op"
-                    :model="[
-                        {
-                            label: 'Profil',
-                            icon: 'pi pi-user',
-                            command: () => {
-                                $inertia.visit('/user/profile');
-                            }
-                        },
-                        {
-                            label: 'Déconnexion',
-                            icon: 'pi pi-sign-out',
-                            command: () => {
-                                $inertia.post('/logout');
-                            }
-                        }
-                    ]"
-                    popup
-                />
-            </div>
-
-            <div
-                v-else
-                class="flex items-center gap-2"
-            >
-                <Button
-                    type="button"
-                    text
-                    label="Connexion"
-                    @click="$inertia.visit('/login')"
-                />
-                <Button
-                    type="button"
-                    label="Inscription"
-                    @click="$inertia.visit('/register')"
-                />
-            </div>
-        </template>
-    </Menubar>
+        <div
+            v-else
+            class="flex items-center gap-2"
+        >
+            <UButton
+                type="button"
+                variant="ghost"
+                label="Connexion"
+                @click="$inertia.visit('/login')"
+            />
+            <UButton
+                type="button"
+                label="Inscription"
+                @click="$inertia.visit('/register')"
+            />
+        </div>
+    </div>
 </template>
 
 <script>
@@ -82,32 +58,37 @@ export default {
             return [
                 {
                     label: 'Accueil',
-                    icon: 'pi pi-home',
-                    command: () => {
-                        this.$inertia.visit('/')
-                    }
+                    icon: 'i-lucide-house',
+                    to: '/'
                 },
                 {
                     label: 'Où glaner',
-                    icon: 'pi pi-map-marker',
-                    command: () => {
-                        this.$inertia.visit('/locations')
-                    }
+                    icon: 'i-lucide-map-pin',
+                    to: '/locations'
                 },
                 {
                     label: 'Soumettre un lieu de glanage',
-                    icon: 'pi pi-info-circle',
-                    command: () => {
-                        this.$inertia.visit('/locations/create')
+                    icon: 'i-lucide-info',
+                    to: '/locations/create'
+                }
+            ]
+        },
+
+        userItems () {
+            return [
+                {
+                    label: 'Profil',
+                    icon: 'i-lucide-user',
+                    to: '/user/profile'
+                },
+                {
+                    label: 'Déconnexion',
+                    icon: 'i-lucide-log-out',
+                    onSelect: () => {
+                        this.$inertia.post('/logout')
                     }
                 }
             ]
-        }
-    },
-
-    methods: {
-        toggle (event) {
-            this.$refs.op.toggle(event)
         }
     }
 }

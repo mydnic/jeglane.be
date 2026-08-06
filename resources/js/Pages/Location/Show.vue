@@ -73,89 +73,83 @@
                 }]"
             />
 
-            <Galleria
-                :value="gleaningLocation.files"
-                container-style="max-width: 640px;max-height: 400px"
-                :show-thumbnails="false"
-                :show-item-navigators="true"
-                circular
+            <UCarousel
+                v-slot="{ item }"
+                :items="gleaningLocation.files"
+                arrows
+                loop
+                class="max-w-[640px]"
             >
-                <template #item="slotProps">
-                    <img
-                        :src="slotProps.item"
-                        alt="Photo"
-                        style="width: 100%;max-height: 400px"
-                        class="object-cover"
-                    >
-                </template>
-            </Galleria>
+                <img
+                    :src="item"
+                    alt="Photo"
+                    class="w-full max-h-[400px] object-cover"
+                >
+            </UCarousel>
 
-            <Card>
+            <UCard>
                 <template #title>
                     <div class="flex items-center justify-between">
                         <div class="flex items-center">
                             Soumis par
                             <span class="ml-1">{{ gleaningLocation.user.name }}</span>
-                            <Avatar
-                                :image="gleaningLocation.user.profile_photo_url"
-                                shape="circle"
+                            <UAvatar
+                                :src="gleaningLocation.user.profile_photo_url"
                                 class="ml-2"
                             />
                         </div>
                         <div class="flex items-center gap-2">
-                            <Button
+                            <UButton
                                 :disabled="!$page.props.auth.user"
-                                :outlined="!gleaningLocation.user_vote || gleaningLocation.user_vote.vote !== 1"
-                                icon="pi pi-chevron-up"
-                                severity="success"
+                                :variant="!gleaningLocation.user_vote || gleaningLocation.user_vote.vote !== 1 ? 'outline' : 'solid'"
+                                icon="i-lucide-chevron-up"
+                                color="success"
                                 @click="vote(1)"
                             />
                             <span class="font-bold text-lg">{{ voteCount }}</span>
-                            <Button
+                            <UButton
                                 :disabled="!$page.props.auth.user"
-                                :outlined="!gleaningLocation.user_vote || gleaningLocation.user_vote.vote !== -1"
-                                icon="pi pi-chevron-down"
-                                severity="danger"
+                                :variant="!gleaningLocation.user_vote || gleaningLocation.user_vote.vote !== -1 ? 'outline' : 'solid'"
+                                icon="i-lucide-chevron-down"
+                                color="error"
                                 @click="vote(-1)"
                             />
                         </div>
                     </div>
                 </template>
-                <template #subtitle>
+                <template #description>
                     Le {{ $dayjs(gleaningLocation.created_at).format('DD/MM/YYYY') }}
                 </template>
 
-                <template #content>
-                    <p class="m-0 overflow-hidden">
-                        {{
-                            gleaningLocation.description
-                                ? gleaningLocation.description
-                                : 'Aucune description'
-                        }}
-                    </p>
-                </template>
-            </Card>
+                <p class="m-0 overflow-hidden">
+                    {{
+                        gleaningLocation.description
+                            ? gleaningLocation.description
+                            : 'Aucune description'
+                    }}
+                </p>
+            </UCard>
 
-            <Card class="lg:col-span-2">
+            <UCard class="lg:col-span-2">
                 <template #title>
                     Commentaires
                 </template>
 
-                <template #content>
+                <template #default>
                     <div
                         v-if="$page.props.auth.user"
                         class="mb-6"
                     >
                         <form @submit.prevent="submitComment">
-                            <Textarea
+                            <UTextarea
                                 v-model="form.content"
                                 placeholder="Laissez un commentaire..."
-                                :auto-resize="true"
-                                rows="3"
+                                autoresize
+                                :rows="3"
                                 class="w-full"
                             />
                             <div class="flex justify-end mt-2">
-                                <Button
+                                <UButton
                                     type="submit"
                                     label="Commenter"
                                     :loading="form.processing"
@@ -185,9 +179,8 @@
                             :key="comment.id"
                         >
                             <div class="flex gap-4">
-                                <Avatar
-                                    :image="comment.user.profile_photo_url"
-                                    shape="circle"
+                                <UAvatar
+                                    :src="comment.user.profile_photo_url"
                                 />
                                 <div class="flex-1">
                                     <div class="flex items-center justify-between">
@@ -202,18 +195,18 @@
                                         {{ comment.content }}
                                     </p>
                                     <div class="mt-2 flex gap-4">
-                                        <Button
+                                        <UButton
                                             v-if="$page.props.auth.user"
-                                            text
-                                            size="small"
+                                            variant="ghost"
+                                            size="sm"
                                             label="Répondre"
                                             @click="replyTo(comment)"
                                         />
-                                        <Button
+                                        <UButton
                                             v-if="$page.props.auth.user && $page.props.auth.user.id === comment.user_id"
-                                            severity="danger"
-                                            text
-                                            size="small"
+                                            color="error"
+                                            variant="ghost"
+                                            size="sm"
                                             label="Supprimer"
                                             @click="deleteComment(comment.id)"
                                         />
@@ -231,9 +224,8 @@
                                     :key="reply.id"
                                     class="flex gap-4"
                                 >
-                                    <Avatar
-                                        :image="reply.user.profile_photo_url"
-                                        shape="circle"
+                                    <UAvatar
+                                        :src="reply.user.profile_photo_url"
                                     />
                                     <div class="flex-1">
                                         <div class="flex items-center justify-between">
@@ -251,10 +243,10 @@
                                             v-if="$page.props.auth.user && $page.props.auth.user.id === reply.user_id"
                                             class="mt-2"
                                         >
-                                            <Button
-                                                severity="danger"
-                                                text
-                                                size="small"
+                                            <UButton
+                                                color="error"
+                                                variant="ghost"
+                                                size="sm"
                                                 label="Supprimer"
                                                 @click="deleteComment(reply.id)"
                                             />
@@ -269,23 +261,23 @@
                                 class="ml-12 mt-4"
                             >
                                 <form @submit.prevent="submitReply(comment.id)">
-                                    <Textarea
+                                    <UTextarea
                                         v-model="replyForm.content"
                                         :placeholder="'Répondre à ' + comment.user.name"
-                                        :auto-resize="true"
-                                        rows="2"
+                                        autoresize
+                                        :rows="2"
                                         class="w-full"
                                     />
                                     <div class="flex justify-end gap-2 mt-2">
-                                        <Button
-                                            text
-                                            size="small"
+                                        <UButton
+                                            variant="ghost"
+                                            size="sm"
                                             label="Annuler"
                                             @click="cancelReply"
                                         />
-                                        <Button
+                                        <UButton
                                             type="submit"
-                                            size="small"
+                                            size="sm"
                                             label="Répondre"
                                             :loading="replyForm.processing"
                                         />
@@ -302,7 +294,7 @@
                         </div>
                     </div>
                 </template>
-            </Card>
+            </UCard>
         </div>
     </AppLayout>
 </template>

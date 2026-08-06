@@ -23,7 +23,7 @@
 
             <div class="text-center" />
 
-            <div class="bg-white shadow rounded-lg p-6">
+            <div class="bg-white shadow-sm rounded-lg p-6">
                 <div v-if="groupedChangelog && Object.keys(groupedChangelog).length > 0">
                     <div
                         v-for="date in Object.keys(groupedChangelog)"
@@ -55,15 +55,14 @@
                     v-if="hasMorePages"
                     class="mt-8 flex justify-center"
                 >
-                    <Button
+                    <UButton
                         :loading="isLoading"
                         :disabled="isLoading"
+                        icon="i-lucide-refresh-cw"
+                        label="Charger plus"
                         class="w-full sm:w-auto"
                         @click="loadMore"
-                    >
-                        <i class="pi pi-refresh mr-2" />
-                        Charger plus
-                    </Button>
+                    />
                 </div>
             </div>
         </div>
@@ -73,14 +72,12 @@
 <script>
 import { defineComponent } from 'vue'
 import { Head } from '@inertiajs/vue3'
-import Button from 'primevue/button'
 import AppLayout from '@/Layouts/AppLayout.vue'
 
 export default defineComponent({
     components: {
         AppLayout,
-        Head,
-        Button
+        Head
     },
 
     props: {

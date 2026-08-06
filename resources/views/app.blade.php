@@ -44,7 +44,7 @@
             }
         </style>
     </head>
-    <body class="font-sans antialiased">
+    <body class="font-sans antialiased isolate">
         @inertia
         @volet
 

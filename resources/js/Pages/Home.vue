@@ -32,7 +32,7 @@
                         <div class="mt-10 flex items-center gap-x-6">
                             <Link
                                 href="/locations"
-                                class="rounded-md bg-emerald-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-emerald-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
+                                class="rounded-md bg-emerald-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-emerald-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
                             >
                                 Voir la carte
                             </Link>
@@ -129,7 +129,7 @@
                                 </div>
                                 <div class="relative pl-9">
                                     <dt class="inline font-semibold text-gray-900">
-                                        <i class="pi pi-ban absolute left-1 top-1 h-5 w-5 text-emerald-600" />
+                                        <UIcon name="i-lucide-ban" class="absolute left-1 top-1 h-5 w-5 text-emerald-600" />
                                     </dt>
                                     <dd class="inline">
                                         Le glanage ne peut en aucun cas se faire sur des parcelles clôturées
@@ -202,7 +202,7 @@
                     <div class="mt-10 flex items-center justify-center gap-x-6">
                         <a
                             :href="route('locations.index')"
-                            class="rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-sm hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                            class="rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-xs hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
                         >Commencez à Glaner !</a>
                         <a
                             :href="route('register')"

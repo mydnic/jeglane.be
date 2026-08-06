@@ -62,24 +62,24 @@
                         <div class="flex-col space-y-4">
                             <div class="flex flex-col md:flex-row gap-3 md:items-center">
                                 <div class="grow max-w-xl">
-                                    <MultiSelect
+                                    <USelectMenu
                                         v-model="selectedCategories"
-                                        :options="gleanables"
-                                        option-label="name"
-                                        option-value="id"
-                                        display="comma"
+                                        :items="gleanables"
+                                        label-key="name"
+                                        value-key="id"
+                                        multiple
                                         placeholder="Filtrer par catégorie"
                                         class="w-full"
-                                        :max-selected-labels="3"
-                                        @change="onCategoriesChanged"
+                                        @update:model-value="onCategoriesChanged"
                                     />
                                 </div>
-                                <Button
+                                <UButton
                                     v-if="selectedCategories.length"
                                     label="Réinitialiser"
-                                    size="small"
-                                    severity="secondary"
-                                    icon="pi pi-filter-slash"
+                                    size="sm"
+                                    color="neutral"
+                                    variant="outline"
+                                    icon="i-lucide-filter-x"
                                     @click="clearCategories"
                                 />
                             </div>
@@ -87,42 +87,39 @@
                                 v-for="(item, index) in locations"
                                 :key="index"
                             >
-                                <Card>
-                                    <template #content>
-                                        <div>
-                                            <div class="text-lg font-medium">
-                                                {{ item.gleanable.name }}
-                                            </div>
-                                            <span class="font-medium text-surface-500 dark:text-surface-400 text-sm">
-                                                {{ item.postal_code }} {{ item.city }}
-                                            </span>
+                                <UCard>
+                                    <div>
+                                        <div class="text-lg font-medium">
+                                            {{ item.gleanable.name }}
                                         </div>
-                                        <div class="flex md:items-end mt-3 gap-3">
-                                            <div class="text-sm text-surface-500 dark:text-surface-400 flex items-center gap-1">
-                                                <i class="pi pi-thumbs-up" />
-                                                {{ item.vote_count || 0 }}
-                                            </div>
-                                            <div class="grow" />
-                                            <Button
-                                                icon="pi pi-map-marker"
-                                                size="small"
-                                                @click="() => $refs.mainMap.centerOn(item.latitude, item.longitude)"
-                                            />
-                                            <Button
-                                                as="Link"
-                                                :href="`/locations/${item.id}`"
-                                                icon="pi pi-external-link"
-                                                outlined
-                                                size="small"
-                                            />
+                                        <span class="font-medium text-muted text-sm">
+                                            {{ item.postal_code }} {{ item.city }}
+                                        </span>
+                                    </div>
+                                    <div class="flex md:items-end mt-3 gap-3">
+                                        <div class="text-sm text-muted flex items-center gap-1">
+                                            <UIcon name="i-lucide-thumbs-up" />
+                                            {{ item.vote_count || 0 }}
                                         </div>
-                                    </template>
-                                </Card>
+                                        <div class="grow" />
+                                        <UButton
+                                            icon="i-lucide-map-pin"
+                                            size="sm"
+                                            @click="() => $refs.mainMap.centerOn(item.latitude, item.longitude)"
+                                        />
+                                        <UButton
+                                            :to="`/locations/${item.id}`"
+                                            icon="i-lucide-external-link"
+                                            variant="outline"
+                                            size="sm"
+                                        />
+                                    </div>
+                                </UCard>
                             </div>
                         </div>
                     </div>
 
-                    <div class="w-full mb-6 md:mb-0 p-3 shadow-sm rounded-xl bg-white mr-4">
+                    <div class="w-full mb-6 md:mb-0 p-3 shadow-xs rounded-xl bg-white mr-4">
                         <Map
                             ref="mainMap"
                             class="w-full h-full min-h-[40vh]"
@@ -144,8 +141,17 @@
 </template>
 
 <script>
-import debounce from 'lodash/debounce'
 import AppLayout from '@/Layouts/AppLayout.vue'
+
+// ponytail: lodash came in with PrimeVue and left with it; this is the only
+// thing the page used it for.
+function debounce (fn, wait) {
+    let timeout
+    return function (...args) {
+        clearTimeout(timeout)
+        timeout = setTimeout(() => fn.apply(this, args), wait)
+    }
+}
 
 export default {
     components: { AppLayout },

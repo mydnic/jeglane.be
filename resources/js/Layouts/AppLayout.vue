@@ -17,6 +17,5 @@ defineProps({
             <slot />
             <AppFooter />
         </main>
-        <Toast />
     </div>
 </template>

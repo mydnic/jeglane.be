@@ -1,6 +1,25 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@import "@nuxt/ui";
+
+@plugin "@tailwindcss/forms";
+@plugin "@tailwindcss/typography";
+
+@source "../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php";
+@source "../../vendor/laravel/jetstream/**/*.blade.php";
+@source "../../storage/framework/views/*.php";
+
+@theme {
+    --font-sans: 'Figtree', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
+        'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+}
+
+/*
+ * The brand green #096 is exactly emerald-600, but Nuxt UI points --ui-primary
+ * at shade 500 by default, so the accent is pinned one shade darker.
+ */
+:root {
+    --ui-primary: var(--ui-color-primary-600);
+}
 
 [x-cloak] {
     display: none;

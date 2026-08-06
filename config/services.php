@@ -47,4 +47,8 @@ return [
         'redirect' => 'https://jeglane.be/auth/social/facebook/callback',
     ],
 
+    'cloudflare' => [
+        'account_id' => env('CLOUDFLARE_ACCOUNT_ID'),
+        'key' => env('CLOUDFLARE_KEY'),
+    ],
 ];

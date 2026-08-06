@@ -19,6 +19,7 @@
         "mydnic/volet-feature-board": "^v1.1.0",
         "spatie/laravel-image-optimizer": "^1.8.2",
         "spatie/laravel-log-dumper": "^1.6.0",
+        "symfony/http-client": "^8.1",
         "tightenco/ziggy": "^v2.6.0"
     },
     "require-dev": {

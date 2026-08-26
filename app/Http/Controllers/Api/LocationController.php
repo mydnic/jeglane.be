@@ -1,13 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Api\Eru;
+namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\GleaningLocation;
-use App\Models\User;
 use Illuminate\Http\Request;
 
-class SpotController extends Controller
+class LocationController extends Controller
 {
     public function store(Request $request)
     {
@@ -22,9 +20,7 @@ class SpotController extends Controller
             'files.*' => 'string',
         ]);
 
-        $eruUser = User::where('email', 'eru@jeglane.be')->firstOrFail();
-
-        $location = $eruUser->gleaningLocations()->create($data);
+        $location = $request->user()->gleaningLocations()->create($data);
 
         return response()->json([
             'id' => $location->id,

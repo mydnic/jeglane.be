@@ -6,10 +6,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('upload', [\App\Http\Controllers\Api\UploadController::class, 'upload']);
 
-// Eru agent — direct spot publishing
-Route::middleware('eru.token')->prefix('eru')->group(function () {
+Route::middleware('auth:sanctum')->group(function () {
     Route::get('gleanables', function () {
         return Gleanable::select('id', 'name')->orderBy('name')->get();
     });
-    Route::post('spots', [\App\Http\Controllers\Api\Eru\SpotController::class, 'store']);
+    Route::post('locations', [\App\Http\Controllers\Api\LocationController::class, 'store']);
 });

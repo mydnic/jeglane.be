@@ -19,7 +19,6 @@ return Application::configure(basePath: dirname(__DIR__))
 
         $middleware->alias([
             'optimizeImages' => \Spatie\LaravelImageOptimizer\Middlewares\OptimizeImages::class,
-            'eru.token' => \App\Http\Middleware\EruApiToken::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

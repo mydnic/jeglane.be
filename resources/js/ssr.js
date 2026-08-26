@@ -34,5 +34,6 @@ createServer(page =>
 
             return app
         }
-    })
+    }),
+    { port: Number(process.env.SSR_PORT) || 13717 }
 )

@@ -54,22 +54,29 @@ export default {
     name: 'AppNavigation',
 
     computed: {
+        currentPath () {
+            return this.$page.url.split('?')[0]
+        },
+
         items () {
             return [
                 {
                     label: 'Accueil',
                     icon: 'i-lucide-house',
-                    to: '/'
+                    to: '/',
+                    active: this.currentPath === '/'
                 },
                 {
                     label: 'Où glaner',
                     icon: 'i-lucide-map-pin',
-                    to: '/locations'
+                    to: '/locations',
+                    active: this.currentPath === '/locations' || (this.currentPath.startsWith('/locations/') && this.currentPath !== '/locations/create')
                 },
                 {
                     label: 'Soumettre un lieu de glanage',
                     icon: 'i-lucide-info',
-                    to: '/locations/create'
+                    to: '/locations/create',
+                    active: this.currentPath === '/locations/create'
                 }
             ]
         },

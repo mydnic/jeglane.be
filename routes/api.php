@@ -10,5 +10,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('gleanables', function () {
         return Gleanable::select('id', 'name')->orderBy('name')->get();
     });
+    Route::get('locations', [\App\Http\Controllers\Api\LocationController::class, 'index']);
     Route::post('locations', [\App\Http\Controllers\Api\LocationController::class, 'store']);
 });

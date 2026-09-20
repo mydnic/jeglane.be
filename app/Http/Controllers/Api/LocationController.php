@@ -11,8 +11,8 @@ class LocationController extends Controller
     public function index(Request $request)
     {
         $data = $request->validate([
-            'latitude' => 'nullable|numeric',
-            'longitude' => 'nullable|numeric',
+            'latitude' => 'nullable|numeric|between:-90,90',
+            'longitude' => 'nullable|numeric|between:-180,180',
             'radius' => 'nullable|numeric|min:0',
             'gleanable_id' => 'nullable|exists:gleanables,id',
         ]);
@@ -48,8 +48,8 @@ class LocationController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'latitude' => 'required|numeric',
-            'longitude' => 'required|numeric',
+            'latitude' => 'required|numeric|between:-90,90',
+            'longitude' => 'required|numeric|between:-180,180',
             'city' => 'required|string',
             'postal_code' => 'required',
             'description' => 'nullable|string',

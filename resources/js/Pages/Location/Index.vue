@@ -84,7 +84,7 @@
                                 />
                             </div>
                             <div
-                                v-for="(item, index) in locations"
+                                v-for="(item, index) in currentLocations"
                                 :key="index"
                             >
                                 <UCard>
@@ -123,7 +123,7 @@
                         <Map
                             ref="mainMap"
                             class="w-full h-full min-h-[40vh]"
-                            :markers="locations.map(l => ({
+                            :markers="currentLocations.map(l => ({
                                 id: l.id,
                                 latitude: l.latitude,
                                 longitude: l.longitude,
@@ -141,6 +141,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 import AppLayout from '@/Layouts/AppLayout.vue'
 
 // ponytail: lodash came in with PrimeVue and left with it; this is the only
@@ -159,6 +160,10 @@ export default {
 
     data () {
         return {
+            // Local copy: map pan/zoom refreshes this directly so the browser
+            // URL/history never changes, which would otherwise make Rybbit's
+            // autoTrackSpa count every pan as a new pageview.
+            currentLocations: this.locations,
             center: {
                 latitude: 50.42279871790141,
                 longitude: 4.529179174218756
@@ -212,16 +217,22 @@ export default {
         getLocations: debounce(function () {
             const latitude = this.clampLatitude(this.center.latitude)
             const longitude = this.normalizeLongitude(this.center.longitude)
-            this.$inertia.get('/locations', {
+            const params = {
                 latitude,
                 longitude,
                 distance: this.maxMeters,
                 categories: this.selectedCategories
-            }, {
-                preserveState: true,
-                preserveScroll: true,
-                replace: true
+            }
+            // Plain JSON fetch on purpose: this keeps the browser URL/history
+            // untouched, so panning/zooming the map doesn't get counted by
+            // Rybbit as a new pageview on every refresh.
+            axios.get('/locations', {
+                params,
+                headers: { Accept: 'application/json' }
+            }).then(response => {
+                this.currentLocations = response.data.locations
             })
+            window.rybbit?.event('locations_map_moved', params)
         }, 500)
     },
 

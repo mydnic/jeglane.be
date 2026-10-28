@@ -16,7 +16,7 @@ class LocationController extends Controller
         $distance = request()->has('distance') ? (float) request('distance') : null;
 
         // Normalize longitude to (-180, 180]
-        if (!is_null($lng)) {
+        if (! is_null($lng)) {
             $lng = fmod($lng + 180.0, 360.0);
             if ($lng < 0) {
                 $lng += 360.0;
@@ -25,17 +25,17 @@ class LocationController extends Controller
         }
 
         // Clamp latitude to [-90, 90]
-        if (!is_null($lat)) {
+        if (! is_null($lat)) {
             $lat = max(-90.0, min(90.0, $lat));
         }
 
         // Ensure distance is a non-negative number, default to 70km if not provided
-        $distance = !is_null($distance) ? max(0.0, $distance) : 70000.0;
+        $distance = ! is_null($distance) ? max(0.0, $distance) : 70000.0;
 
         $locations = GleaningLocation::query()
             ->active()
             ->with('gleanable')
-            ->when(!is_null($lat) && !is_null($lng), function ($query) use ($lat, $lng, $distance) {
+            ->when(! is_null($lat) && ! is_null($lng), function ($query) use ($lat, $lng, $distance) {
                 $query
                     ->selectRaw('*, ST_Distance_Sphere(point(longitude, latitude), point(?, ?)) as distance', [
                         $lng,
@@ -49,21 +49,28 @@ class LocationController extends Controller
             })
             ->when(request()->filled('categories'), function ($query) {
                 $categories = request('categories');
-                if (!is_array($categories)) {
+                if (! is_array($categories)) {
                     $categories = array_filter(explode(',', (string) $categories));
                 }
-                if (!empty($categories)) {
+                if (! empty($categories)) {
                     $query->whereIn('gleanable_id', $categories);
                 }
             })
             ->when(request()->has('postal_code'), function ($query) {
                 $query->where('postal_code', request('postal_code'));
             })
-            ->withCount(['votes as vote_count' => function($query) {
+            ->withCount(['votes as vote_count' => function ($query) {
                 $query->select(\DB::raw('COALESCE(SUM(vote), 0)'));
             }])
             ->orderBy('postal_code')
             ->get();
+
+        // Live map pan/zoom refetches ask for JSON so the frontend can update
+        // the locations list without touching the browser URL/history (and
+        // without Rybbit's autoTrackSpa counting it as a new pageview).
+        if (request()->wantsJson()) {
+            return response()->json(['locations' => $locations]);
+        }
 
         $gleanables = Gleanable::orderBy('name')->get();
 
@@ -85,7 +92,7 @@ class LocationController extends Controller
     public function show(GleaningLocation $gleaningLocation)
     {
         $gleaningLocation->load(['gleanable', 'user']);
-        $gleaningLocation->loadMissing(['comments' => function($query) {
+        $gleaningLocation->loadMissing(['comments' => function ($query) {
             $query->whereNull('parent_id')->with('user', 'replies.user');
         }]);
 
@@ -102,6 +109,7 @@ class LocationController extends Controller
     public function create()
     {
         $gleanables = Gleanable::orderBy('name')->get();
+
         return inertia('Location/Create', compact('gleanables'));
     }
 

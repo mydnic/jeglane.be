@@ -3,7 +3,8 @@
     "type": "module",
     "scripts": {
         "dev": "vite",
-        "build": "vite build && vite build --ssr"
+        "build": "vite build && vite build --ssr",
+        "test:tracking": "node tests/Browser/pageview-tracking.mjs"
     },
     "devDependencies": {
         "@heroicons/vue": "^2.2.0",
@@ -16,8 +17,10 @@
         "@vue/server-renderer": "^3.5.41",
         "axios": "^1.19.0",
         "dayjs": "^1.11.21",
+        "esbuild": "^0.27.7",
         "eslint": "^10.8.0",
         "laravel-vite-plugin": "^3.1.3",
+        "playwright-core": "^1.64.1",
         "tailwindcss": "^4.3.3",
         "typescript": "^5.9.0",
         "unplugin-vue-components": "^32.1.0",

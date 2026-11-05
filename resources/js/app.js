@@ -14,10 +14,16 @@ const appName = import.meta.env.VITE_APP_NAME || 'Jeglane.be'
 // Inertia writes history.replaceState on every window scroll to persist the
 // scroll position, and it replaces the state again on any same-URL visit.
 // Rybbit's SPA auto-tracking patches pushState/replaceState and logs a
-// pageview on each call, so scrolling a page was counted as browsing it dozens
-// of times. SPA auto-tracking is now off in the Rybbit site config and we emit
-// the pageview here instead, once per real pathname change. The initial load
-// is still tracked by the script itself.
+// pageview on each call, so reading one page was counted as browsing it ten
+// times or more. SPA auto-tracking is now off in the Rybbit site config and
+// the pageview is emitted here instead, once per real pathname change. The
+// initial load is still tracked by the script itself.
+//
+// Half of that lives outside this repository: the script hardcodes
+// autoTrackSpa to true and only learns otherwise from
+// /site/tracking-config/<site-id>. If that call ever fails the script patches
+// history again and every navigation is counted twice, which is roughly the
+// old inflation. tests/Browser/pageview-tracking.mjs measures all three cases.
 let lastTrackedPath = window.location.pathname
 
 router.on('navigate', () => {

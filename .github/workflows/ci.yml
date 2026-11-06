@@ -1,0 +1,103 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  php:
+    name: PHP
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          extensions: bcmath, intl, mbstring, pdo_sqlite, sqlite3, zip
+          coverage: none
+
+      - name: Install composer dependencies
+        uses: ramsey/composer-install@v3
+
+      - name: Prepare the environment
+        run: |
+          cp .env.example .env
+          php artisan key:generate
+
+      - name: Check formatting
+        run: vendor/bin/pint --test
+
+      - name: Compile every Blade view
+        run: php artisan view:cache
+
+      - name: Run the test suite
+        env:
+          DB_CONNECTION: sqlite
+          DB_DATABASE: ':memory:'
+        run: php artisan test
+
+  assets:
+    name: Lint and build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - uses: actions/checkout@v4
+
+      # The Vite build imports Ziggy straight out of vendor/, so composer has
+      # to run before yarn even though nothing PHP is executed here.
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          coverage: none
+
+      - name: Install composer dependencies
+        uses: ramsey/composer-install@v3
+        with:
+          composer-options: '--no-dev --no-scripts'
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Install yarn dependencies
+        run: |
+          corepack enable
+          yarn install --immutable
+
+      - name: Lint
+        run: yarn lint
+
+      - name: Build the client and SSR bundles
+        run: yarn build
+
+  tracking:
+    name: Pageview tracking
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Install yarn dependencies
+        run: |
+          corepack enable
+          yarn install --immutable
+
+      - name: Install Chromium
+        run: npx playwright-core install --with-deps chromium
+
+      - name: Count the pageviews a session sends
+        run: yarn test:tracking

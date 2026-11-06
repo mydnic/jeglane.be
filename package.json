@@ -4,6 +4,8 @@
     "scripts": {
         "dev": "vite",
         "build": "vite build && vite build --ssr",
+        "lint": "eslint .",
+        "lint:fix": "eslint . --fix",
         "test:tracking": "node tests/Browser/pageview-tracking.mjs"
     },
     "devDependencies": {

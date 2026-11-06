@@ -43,7 +43,7 @@ export default {
     },
 
     async mounted () {
-        ((g) => { var h, a, k, p = 'The Google Maps JavaScript API', c = 'google', l = 'importLibrary', q = '__ib__', m = document, b = window; b = b[c] || (b[c] = {}); var d = b.maps || (b.maps = {}), r = new Set(), e = new URLSearchParams(), u = () => h || (h = new Promise(async (f, n) => { await (a = m.createElement('script')); e.set('libraries', [...r] + ''); for (k in g)e.set(k.replace(/[A-Z]/g, t => '_' + t[0].toLowerCase()), g[k]); e.set('callback', c + '.maps.' + q); a.src = `https://maps.${c}apis.com/maps/api/js?` + e; d[q] = f; a.onerror = () => h = n(Error(p + ' could not load.')); a.nonce = m.querySelector('script[nonce]')?.nonce || ''; m.head.append(a) })); d[l] ? console.warn(p + ' only loads once. Ignoring:', g) : d[l] = (f, ...n) => r.add(f) && u().then(() => d[l](f, ...n)) })({
+        ((g) => { let h, a, k, p = 'The Google Maps JavaScript API', c = 'google', l = 'importLibrary', q = '__ib__', m = document, b = window; b = b[c] || (b[c] = {}); const d = b.maps || (b.maps = {}), r = new Set(), e = new URLSearchParams(), u = () => h || (h = new Promise(async (f, n) => { await (a = m.createElement('script')); e.set('libraries', [...r] + ''); for (k in g)e.set(k.replace(/[A-Z]/g, t => '_' + t[0].toLowerCase()), g[k]); e.set('callback', c + '.maps.' + q); a.src = `https://maps.${c}apis.com/maps/api/js?` + e; d[q] = f; a.onerror = () => h = n(Error(p + ' could not load.')); a.nonce = m.querySelector('script[nonce]')?.nonce || ''; m.head.append(a) })); d[l] ? console.warn(p + ' only loads once. Ignoring:', g) : d[l] = (f, ...n) => r.add(f) && u().then(() => d[l](f, ...n)) })({
             key: import.meta.env.VITE_GOOGLE_MAP_API,
             v: 'weekly'
         })
@@ -57,7 +57,7 @@ export default {
             const position = { lat: 50.42279871790141, lng: 4.529179174218756 }
             // Request needed libraries.
             // @ts-ignore
-            // eslint-disable-next-line no-undef
+
             const { Map } = await google.maps.importLibrary('maps')
 
             // The map, centered at Uluru
@@ -137,7 +137,6 @@ export default {
             secondChild.style.backgroundRepeat = 'no-repeat'
             firstChild.appendChild(secondChild)
 
-            // eslint-disable-next-line no-undef
             google.maps.event.addListener(map, 'center_changed', function () {
                 secondChild.style['background-position'] = '0 0'
             })
@@ -153,7 +152,6 @@ export default {
 
                 if (navigator.geolocation) {
                     navigator.geolocation.getCurrentPosition(function (position) {
-                        // eslint-disable-next-line no-undef
                         const latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude)
                         map.panTo(latlng)
                         map.setZoom(15)
@@ -182,13 +180,13 @@ export default {
             })
 
             controlDiv.index = 1
-            // eslint-disable-next-line no-undef
+
             map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(controlDiv)
         },
 
         async registerMapClick (map) {
             const that = this
-            // eslint-disable-next-line no-undef
+
             await google.maps.event.addListener(map, 'click', async function (event) {
                 if (that.selectedMarker) {
                     that.selectedMarker.position = event.latLng
@@ -221,7 +219,7 @@ export default {
         },
 
         clearOverlays () {
-            for (var i = 0; i < this.markersArray.length; i++) {
+            for (let i = 0; i < this.markersArray.length; i++) {
                 this.markersArray[i].setMap(null)
             }
             this.markersArray.length = 0
@@ -237,7 +235,7 @@ export default {
                 }
                 return
             }
-            // eslint-disable-next-line no-undef
+
             const { AdvancedMarkerElement } = await google.maps.importLibrary('marker')
             this.markers.map((marker) => {
                 const m = new AdvancedMarkerElement({

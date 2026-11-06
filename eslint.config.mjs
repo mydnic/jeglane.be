@@ -25,11 +25,11 @@ export default createConfigForNuxt({
         ]
     })
     .append({
-        // Inertia pages are routed by file name, so they are single words by
-        // design, and `Head` is Inertia's own component.
-        files: ['resources/js/Pages/**'],
         rules: {
+            // Inertia routes pages by file name and the Jetstream components
+            // this app is built on are single words, so the whole tree is.
             'vue/multi-word-component-names': 'off',
+            // `Head` is Inertia's own component.
             'vue/no-reserved-component-names': 'off'
         }
     })

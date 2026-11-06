@@ -260,7 +260,7 @@
                                 v-if="replyingTo === comment.id"
                                 class="ml-12 mt-4"
                             >
-                                <form @submit.prevent="submitReply(comment.id)">
+                                <form @submit.prevent="submitReply()">
                                     <UTextarea
                                         v-model="replyForm.content"
                                         :placeholder="'Répondre à ' + comment.user.name"
@@ -381,7 +381,7 @@ export default {
             this.replyForm.reset()
         },
 
-        submitReply (commentId) {
+        submitReply () {
             this.replyForm.post(route('locations.comments.store', this.gleaningLocation.id), {
                 preserveScroll: true,
                 onSuccess: () => {

@@ -10,17 +10,50 @@ defineProps({
 <template>
     <Head>
         <title>À propos</title>
-        <link rel="canonical" :href="route('about')">
-        <meta name="description" content="Découvrez l'histoire et la mission de JeGlane.be, la plateforme communautaire qui recense les lieux de glanage en Belgique.">
-        <meta property="og:type" content="article">
-        <meta property="og:title" content="À propos de JeGlane.be">
-        <meta property="og:description" content="Pourquoi JeGlane.be ? Une plateforme open source, gratuite et sans pub pour faciliter le glanage en Belgique.">
-        <meta property="og:image" content="/logo.png">
-        <meta property="og:url" :content="route('about')">
-        <meta name="twitter:card" content="summary_large_image">
-        <meta name="twitter:title" content="À propos de JeGlane.be">
-        <meta name="twitter:description" content="Open source, gratuit et sans pub : apprenez-en plus sur JeGlane.be.">
-        <meta name="twitter:image" content="/logo.png">
+        <link
+            rel="canonical"
+            :href="route('about')"
+        >
+        <meta
+            name="description"
+            content="Découvrez l'histoire et la mission de JeGlane.be, la plateforme communautaire qui recense les lieux de glanage en Belgique."
+        >
+        <meta
+            property="og:type"
+            content="article"
+        >
+        <meta
+            property="og:title"
+            content="À propos de JeGlane.be"
+        >
+        <meta
+            property="og:description"
+            content="Pourquoi JeGlane.be ? Une plateforme open source, gratuite et sans pub pour faciliter le glanage en Belgique."
+        >
+        <meta
+            property="og:image"
+            content="/logo.png"
+        >
+        <meta
+            property="og:url"
+            :content="route('about')"
+        >
+        <meta
+            name="twitter:card"
+            content="summary_large_image"
+        >
+        <meta
+            name="twitter:title"
+            content="À propos de JeGlane.be"
+        >
+        <meta
+            name="twitter:description"
+            content="Open source, gratuit et sans pub : apprenez-en plus sur JeGlane.be."
+        >
+        <meta
+            name="twitter:image"
+            content="/logo.png"
+        >
     </Head>
 
     <AppLayout>

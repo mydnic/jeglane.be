@@ -1,11 +1,8 @@
 <script setup>
 import { Head, Link, useForm } from '@inertiajs/vue3'
-import AuthenticationCard from '@/Components/AuthenticationCard.vue'
 import AuthenticationCardLogo from '@/Components/AuthenticationCardLogo.vue'
-import Checkbox from '@/Components/Checkbox.vue'
 import InputError from '@/Components/InputError.vue'
 import InputLabel from '@/Components/InputLabel.vue'
-import PrimaryButton from '@/Components/PrimaryButton.vue'
 import TextInput from '@/Components/TextInput.vue'
 import AppLayout from '@/Layouts/AppLayout.vue'
 
@@ -59,7 +56,10 @@ const submit = () => {
                             </div>
                             <div class="relative pl-9">
                                 <dt class="inline font-semibold text-gray-900">
-                                    <UIcon name="i-lucide-ban" class="absolute left-1 top-1 h-5 w-5 text-emerald-600" />
+                                    <UIcon
+                                        name="i-lucide-ban"
+                                        class="absolute left-1 top-1 h-5 w-5 text-emerald-600"
+                                    />
                                 </dt>
                                 <dd class="inline">
                                     Le glanage ne peut en aucun cas se faire sur des parcelles clôturées

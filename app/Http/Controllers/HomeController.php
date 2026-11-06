@@ -3,10 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\GleaningLocation;
-use Illuminate\Http\Request;
-use Illuminate\Support\Str;
 use Inertia\Inertia;
-use Laravel\Jetstream\Jetstream;
 
 class HomeController extends Controller
 {

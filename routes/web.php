@@ -7,11 +7,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\SitemapController;
 use App\Http\Controllers\VoteController;
-use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
-use Laravel\Jetstream\Http\Controllers\Inertia\PrivacyPolicyController;
-use Laravel\Jetstream\Http\Controllers\Inertia\TermsOfServiceController;
 
 Route::get('/', [HomeController::class, 'home'])->name('home');
 Route::get('/a-propos', [HomeController::class, 'about'])->name('about');

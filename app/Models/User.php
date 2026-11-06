@@ -29,7 +29,7 @@ class User extends Authenticatable
         'password',
         'avatar',
         'social_provider',
-        'social_provider_id'
+        'social_provider_id',
     ];
 
     /**

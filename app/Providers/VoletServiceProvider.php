@@ -16,7 +16,7 @@ class VoletServiceProvider extends ServiceProvider
 
         // Example of registering a custom feature
         $volet->register(
-            (new VoletFeatureBoard())
+            (new VoletFeatureBoard)
                 ->setLabel('Fonctionnalités')
                 ->addCategory(
                     slug: 'idea',

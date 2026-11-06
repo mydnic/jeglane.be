@@ -56,15 +56,15 @@ class SitemapController extends Controller
 
         foreach ($urls as $u) {
             $xml[] = '  <url>';
-            $xml[] = '    <loc>' . e($u['loc']) . '</loc>';
-            if (!empty($u['lastmod'])) {
-                $xml[] = '    <lastmod>' . e($u['lastmod']) . '</lastmod>';
+            $xml[] = '    <loc>'.e($u['loc']).'</loc>';
+            if (! empty($u['lastmod'])) {
+                $xml[] = '    <lastmod>'.e($u['lastmod']).'</lastmod>';
             }
-            if (!empty($u['changefreq'])) {
-                $xml[] = '    <changefreq>' . e($u['changefreq']) . '</changefreq>';
+            if (! empty($u['changefreq'])) {
+                $xml[] = '    <changefreq>'.e($u['changefreq']).'</changefreq>';
             }
-            if (!empty($u['priority'])) {
-                $xml[] = '    <priority>' . e($u['priority']) . '</priority>';
+            if (! empty($u['priority'])) {
+                $xml[] = '    <priority>'.e($u['priority']).'</priority>';
             }
             $xml[] = '  </url>';
         }

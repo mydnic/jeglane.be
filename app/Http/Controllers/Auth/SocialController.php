@@ -7,7 +7,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Laravel\Socialite\Facades\Socialite;
- use Laravel\Socialite\Two\InvalidStateException;
+use Laravel\Socialite\Two\InvalidStateException;
 
 class SocialController extends Controller
 {
@@ -24,6 +24,7 @@ class SocialController extends Controller
             return redirect()->route('login')->with('error', 'Authentication failed. Please try again.');
         } catch (\Exception $e) {
             report($e);
+
             return redirect()->route('login')->with('error', 'Authentication failed. Please try again.');
         }
 

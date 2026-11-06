@@ -229,7 +229,7 @@ export default {
             axios.get('/locations', {
                 params,
                 headers: { Accept: 'application/json' }
-            }).then(response => {
+            }).then((response) => {
                 this.currentLocations = response.data.locations
             })
             window.rybbit?.event('locations_map_moved', params)

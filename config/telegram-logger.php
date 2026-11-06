@@ -24,5 +24,5 @@ return [
         // 'parse_mode' => 'html',
         // 'disable_web_page_preview' => true,
         // 'disable_notification' => false
-    ]
+    ],
 ];

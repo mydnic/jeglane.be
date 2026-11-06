@@ -51,7 +51,10 @@ const submit = () => {
                             </div>
                             <div class="relative pl-9">
                                 <dt class="inline font-semibold text-gray-900">
-                                    <UIcon name="i-lucide-ban" class="absolute left-1 top-1 h-5 w-5 text-emerald-600" />
+                                    <UIcon
+                                        name="i-lucide-ban"
+                                        class="absolute left-1 top-1 h-5 w-5 text-emerald-600"
+                                    />
                                 </dt>
                                 <dd class="inline">
                                     Le glanage ne peut en aucun cas se faire sur des parcelles clôturées

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Inertia\Inertia;
 use Mydnic\ChangelogCommitForLaravel\Models\Changelog;
 
 class ChangelogController extends Controller
@@ -22,7 +21,7 @@ class ChangelogController extends Controller
         }
 
         return inertia('Changelog/Index', [
-            'changelogs' => $changelogs
+            'changelogs' => $changelogs,
         ]);
     }
 }

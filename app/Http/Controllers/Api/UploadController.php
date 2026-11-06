@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Str;
 
 class UploadController extends Controller
 {
@@ -20,7 +19,7 @@ class UploadController extends Controller
         foreach ($request->file('files') as $file) {
             $date = date('Y-m-d');
             $uploadedFiles->push(
-                \Storage::url($file->store('public/uploads/' . $date))
+                \Storage::url($file->store('public/uploads/'.$date))
             );
         }
 

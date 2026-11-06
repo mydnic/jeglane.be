@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Comment;
 use App\Models\GleaningLocation;
 use Illuminate\Http\Request;
-use Inertia\Inertia;
 
 class CommentController extends Controller
 {

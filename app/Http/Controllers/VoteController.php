@@ -20,23 +20,26 @@ class VoteController extends Controller
         ])->first();
 
         // If no vote exists, create it
-        if (!$vote) {
+        if (! $vote) {
             Vote::create([
                 'user_id' => auth()->id(),
                 'gleaning_location_id' => $gleaningLocation->id,
                 'vote' => $request->vote,
             ]);
+
             return back();
         }
 
         // If the user clicked the same vote button, remove their vote
         if ($vote->vote == $request->vote) {
             $vote->delete();
+
             return back();
         }
 
         // If the user clicked a different vote button, update their vote
         $vote->update(['vote' => $request->vote]);
+
         return back();
     }
 }
